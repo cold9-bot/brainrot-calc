@@ -73,6 +73,12 @@ class Handler(SimpleHTTPRequestHandler):
             self._json(404, {"error": "This local Threadline endpoint was not found."})
             return
 
+        allowed_origins = {f"http://127.0.0.1:{PORT}", f"http://localhost:{PORT}"}
+        origin = self.headers.get("Origin", "")
+        if origin not in allowed_origins:
+            self._json(403, {"error": "OpenAI analysis accepts requests only from the local Threadline app."})
+            return
+
         api_key = os.environ.get("OPENAI_API_KEY", "").strip()
         if not api_key:
             self._json(503, {"error": "No API key is available. Stop Threadline and relaunch it with Start Threadline.command."})
