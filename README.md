@@ -7,16 +7,16 @@ A small portfolio containing two browser apps:
 
 ## Try the apps
 
-Open the calculator app in calculator/index.html or Threadline in threadline/storyflow.html. Threadline includes a ready-to-explore sample that does not need an API key.
+Open the calculator app in calculator/index.html or Threadline in threadline/storyflow.html. Threadline analyzes pasted or uploaded text in your browser without an AI API key.
 
 ## Source
 
-The HTML app files are the source for each browser app. Threadline’s optional OpenAI integration is in threadline/threadline_server.py; its local launcher and setup notes are beside it. The API key must be supplied locally and is not included in this repository.
+The HTML app files are the source for each browser app. Threadline uses in-browser sentence and keyword analysis; no analysis server or AI API key is required.
 
 ## Project prompts
 
 The app ideas and feature direction began with my original prompts. I used AI to polish their wording with a few minor changes while keeping the core ideas intact. Read the [polished prompts](PROMPTS.md) and [original prompts](ORIGINAL_PROMPTS.md).
 
-## Threadline and OpenAI
+## Threadline analysis
 
-The sample is preloaded so the portfolio can be explored without API setup. To analyze new text with OpenAI, run Start Threadline.command from the Threadline folder and enter your own API key in Terminal. The server stays on the local computer. GitHub Pages cannot run this Python server by itself.
+Threadline builds ordered blocks and categories in the browser using sentence and keyword rules. Its summaries select representative sentences from the source rather than rewriting them. Scanned PDFs without selectable text need their contents pasted into the text box.
