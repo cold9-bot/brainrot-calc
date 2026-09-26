@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Serve Threadline locally and keep its optional OpenAI key on the server."""
+"""Serve Threadline locally and keep its optional AI service key on the server."""
 
 from __future__ import annotations
 
@@ -76,7 +76,7 @@ class Handler(SimpleHTTPRequestHandler):
         allowed_origins = {f"http://127.0.0.1:{PORT}", f"http://localhost:{PORT}"}
         origin = self.headers.get("Origin", "")
         if origin not in allowed_origins:
-            self._json(403, {"error": "OpenAI analysis accepts requests only from the local Threadline app."})
+            self._json(403, {"error": "AI analysis accepts requests only from the local Threadline app."})
             return
 
         api_key = os.environ.get("OPENAI_API_KEY", "").strip()
@@ -123,27 +123,27 @@ class Handler(SimpleHTTPRequestHandler):
                     if content.get("type") == "output_text":
                         text_parts.append(content.get("text", ""))
             if not text_parts:
-                self._json(502, {"error": "OpenAI returned no analysis text. Please try again."})
+                self._json(502, {"error": "The AI service returned no analysis text. Please try again."})
                 return
             result = json.loads("".join(text_parts))
             if not isinstance(result, dict) or not isinstance(result.get("blocks"), list):
-                self._json(502, {"error": "OpenAI returned an unreadable map. Please try again."})
+                self._json(502, {"error": "The AI service returned an unreadable map. Please try again."})
                 return
             self._json(200, result)
         except urllib.error.HTTPError as error:
             if error.code == 401:
-                message = "OpenAI did not accept this API key. Stop Threadline and relaunch with the correct key."
+                message = "The AI service did not accept this API key. Stop Threadline and relaunch with the correct key."
             elif error.code == 429:
-                message = "OpenAI is busy or the API project has no available quota. Check API billing and try again."
+                message = "The AI service is busy or the API project has no available quota. Check API billing and try again."
             else:
-                message = "OpenAI could not complete the analysis. Please try again."
+                message = "The AI service could not complete the analysis. Please try again."
             self._json(502, {"error": message})
         except urllib.error.URLError:
-            self._json(502, {"error": "Could not reach OpenAI. Check the internet connection and try again."})
+            self._json(502, {"error": "Could not reach the AI service. Check the internet connection and try again."})
         except (json.JSONDecodeError, UnicodeDecodeError, AttributeError, TypeError):
-            self._json(400, {"error": "Threadline could not read the request or OpenAI response. Please try again."})
+            self._json(400, {"error": "Threadline could not read the request or AI response. Please try again."})
         except TimeoutError:
-            self._json(504, {"error": "OpenAI took too long to respond. Please try again."})
+            self._json(504, {"error": "The AI service took too long to respond. Please try again."})
         except Exception:
             self._json(500, {"error": "Threadline could not build the map. Please restart it and try again."})
 
