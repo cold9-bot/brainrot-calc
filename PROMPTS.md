@@ -16,8 +16,8 @@ When a calculation is saved, save its name, expression, answer, notes, and compl
 
 Build an app called Threadline that helps people understand long text. Let users upload PDFs and other text-based files, or paste text directly into the app.
 
-Analyze the text and organize it into a synchronized, left-to-right sequence of blocks. Write the block titles, summaries, flowchart steps, and key points in fresh wording based on the meaning—do not copy the source sentences or distinctive phrasing. Preserve names and facts when changing them could distort the meaning.
+Analyze the text in the browser without an AI service, API key, or analysis server. Use sentence and keyword rules to organize it into a synchronized, left-to-right sequence of blocks. Create titles, summaries, flowchart steps, and key points by selecting representative sentences and phrases from the source; make clear that this is extractive analysis and preserves source wording rather than paraphrasing it.
 
 Show a button for each block across the screen. When a block is selected, display a flowchart of how its ideas connect and a detailed summary beside it. Show important parts of the full text in separate categories, such as context, conflict, key events, turning points, outcome, and recurring ideas. Include People / subjects only when they are relevant. Do not show a section that simply repeats the original text.
 
-Let users save a complete map—including its source, blocks, summaries, flowcharts, and key points—in a library inside the app. Add a New Map option that opens a fresh workspace. Include a ready-made sample map that people can explore immediately.
+Let users save a complete map—including its source, blocks, summaries, flowcharts, and key points—in a library inside the app. Add a New Map option that opens a fresh workspace. Do not include a preloaded sample map.
