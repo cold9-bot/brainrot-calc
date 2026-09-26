@@ -47,6 +47,9 @@
     .code-link{font-size:11px;color:#cbd5ce;text-decoration:none;border-bottom:1px solid #84958a;padding:4px 0}
     .code-link:hover{color:var(--mint);border-color:var(--mint)}
     .project-note{font-size:10px;color:#adbbb2;margin-top:11px}
+    .project-setup summary{cursor:pointer;color:#e2c78f;text-decoration:underline;text-underline-offset:3px}
+    .project-setup p{font-size:10px!important;line-height:1.65!important;color:#bdc6bf!important;margin:8px 0!important}
+    .project-setup a{color:var(--mint);text-decoration:none;border-bottom:1px solid #87d7b466}
     .about{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;border-top:1px solid #ffffff16;padding:28px 0 34px}
     .about h2{font-size:14px;margin:0 0 8px}
     .about p{font-size:11px;line-height:1.75;color:var(--muted);margin:0;max-width:620px}
@@ -98,7 +101,11 @@
               <a class="button primary" href="threadline/storyflow.html">Open Threadline <span aria-hidden="true">↗</span></a>
               <a class="code-link" href="https://github.com/cold9-bot/brainrot-calc/blob/main/threadline/storyflow.html">View code</a>
             </div>
-            <div class="project-note">Browser mode needs no key. Optional OpenAI mode uses a secure local server.</div>
+            <details class="project-note project-setup">
+              <summary>How to enable OpenAI analysis</summary>
+              <p>Download the repository, extract it, and open <strong>threadline/Start Threadline.command</strong> on your Mac. Enter your API key in Terminal when prompted, then choose OpenAI analysis in Threadline. The key stays in the local server process; your text is sent to OpenAI, and API usage may be billed. The hosted portfolio link itself uses browser analysis.</p>
+              <a href="https://github.com/cold9-bot/brainrot-calc/archive/refs/heads/main.zip">Download the repository ↗</a> · <a href="https://github.com/cold9-bot/brainrot-calc#optional-openai-analysis">Full setup instructions ↗</a>
+            </details>
           </article>
         </div>
       </section>
