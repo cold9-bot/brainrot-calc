@@ -1,21 +1,22 @@
-# Selected Builds — Project Portfolio
+# Selected Builds
 
-Two browser apps built around clear, hands-on interactions.
+A small portfolio containing two browser apps:
 
-## Live portfolio
+- **Brainrot Calc** — a scientific calculator with notes, recent calculations, and a folder-based library.
+- **Threadline** — a text story map with ordered blocks, flow diagrams, summaries, and categorized key points.
 
-[Open the portfolio site](https://cold9-bot.github.io/brainrot-calc/)
+## Try the apps
 
-## Apps
-
-- [Brainrot Calc](https://cold9-bot.github.io/brainrot-calc/calculator/index.html) — scientific calculations with notes, recent steps, and saved folders.
-- [Threadline](https://cold9-bot.github.io/brainrot-calc/threadline/storyflow.html) — explore a ready-made text map without a key. Custom OpenAI analysis needs the optional local Python server.
+Open the calculator app in calculator/index.html or Threadline in threadline/storyflow.html. Threadline includes a ready-to-explore sample that does not need an API key.
 
 ## Source
 
-- [Calculator source](calculator/index.html)
-- [Threadline app source](threadline/storyflow.html)
-- [Threadline local OpenAI server](threadline/threadline_server.py)
-- [OpenAI setup notes](threadline/OPENAI_SETUP.md)
+The HTML app files are the source for each browser app. Threadline’s optional OpenAI integration is in threadline/threadline_server.py; its local launcher and setup notes are beside it. The API key must be supplied locally and is not included in this repository.
 
-No API key is stored in the repository. Threadline's portfolio sample runs without one. To analyze custom text with OpenAI, run its local launcher and enter your own key in Terminal.
+## Prompts and process
+
+See [PROMPTS.md](PROMPTS.md) for the AI-assisted, polished versions of the original app prompts. The initial concepts and product requirements came from me; AI helped organize and refine the wording.
+
+## Threadline and OpenAI
+
+The sample is preloaded so the portfolio can be explored without API setup. To analyze new text with OpenAI, run Start Threadline.command from the Threadline folder and enter your own API key in Terminal. The server stays on the local computer. GitHub Pages cannot run this Python server by itself.
