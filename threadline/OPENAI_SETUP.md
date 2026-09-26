@@ -1,4 +1,4 @@
-# Start Threadline with OpenAI
+# Start Threadline with OpenAI(IF u want an ai powered analysis)
 
 Threadline uses OpenAI to understand the source and write new titles, summaries, flow steps, and key points in fresh wording. It preserves names and facts when changing them would distort the meaning.
 
