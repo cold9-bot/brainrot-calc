@@ -1,6 +1,6 @@
 # Project prompts
 
-These are AI-assisted refinements of my original app ideas and follow-up requirements. The concepts and product details started with me; I used AI to organize and polish the wording.
+The prompts below describe the features and behavior of each app.
 
 ## Brainrot Calc
 
