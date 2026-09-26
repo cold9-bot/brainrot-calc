@@ -165,7 +165,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
     <span><span class="brand-name">Threadline</span><span class="brand-note">Story, in sequence</span></span>
   </a>
   <div class="top-right">
-    <span class="local-tag"><span class="local-dot"></span>OpenAI text analysis</span>
+    <span class="local-tag"><span class="local-dot"></span>In-browser analysis · no AI key</span>
     <button class="new-map" id="libraryButton" type="button">▣ Saved concepts <span id="libraryCount">0</span></button>
     <button class="new-map" id="newMap" hidden>＋ New map</button>
   </div>
@@ -195,9 +195,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
         <label class="tiny-label" for="sourceText">TEXT TO MAP</label>
         <textarea class="source-text" id="sourceText" placeholder="Paste a story, article, chapter, or any text you want to understand…"></textarea>
         <div class="source-actions">
-          <span class="privacy-note" id="analysisStatus" aria-live="polite">Explore the sample without a key. OpenAI is optional for mapping your own text.</span>
-          <button class="new-map" id="sampleMapButton" type="button">Explore sample</button>
-          <button class="primary" id="analyzeButton" type="button" disabled>Build with OpenAI <span aria-hidden="true">→</span></button>
+          <span class="privacy-note" id="analysisStatus" aria-live="polite">Analyze text in your browser. No AI API key is required; summaries use representative sentences from your source.</span>
+          <button class="primary" id="analyzeButton" type="button" disabled>Analyze text <span aria-hidden="true">→</span></button>
         </div>
       </article>
       <aside class="panel guide-panel">
@@ -206,7 +205,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
         <div class="guide-step"><span class="step-number">01</span><div><strong>Ordered blocks</strong><span>The text is divided into a left-to-right sequence. Select any block to focus on it.</span></div></div>
         <div class="guide-step"><span class="step-number">02</span><div><strong>A block flowchart</strong><span>See the selected block’s opening, key shift, and outcome connected in order.</span></div></div>
         <div class="guide-step"><span class="step-number">03</span><div><strong>Key parts by type</strong><span>Switch between people, context, tension, events, turning points, and outcome.</span></div></div>
-        <div class="guide-foot">PDF and DOCX text is extracted in your browser, then sent to OpenAI when you build the map. Scanned PDFs without selectable text may need their text pasted in. <a href="OPENAI_SETUP.md" target="_blank" rel="noopener">OpenAI setup</a></div>
+        <div class="guide-foot">Text is analyzed in your browser with sentence and keyword rules. No AI API key is needed, and your text is not sent to an analysis server. Scanned PDFs without selectable text may need their text pasted in.</div>
       </aside>
     </div>
   </section>
@@ -233,7 +232,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
       <div class="keypoints-title"><div><h3>Important parts of the full text</h3><p>Choose a type to see only those points.</p></div><span class="tiny-label">SORTED BY ROLE</span></div>
       <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="Important point types"></div>
       <div class="key-list" id="keyList" role="tabpanel"></div>
-      <div class="notice">OpenAI rewrites the source in fresh wording, but may miss context. Check important details against the original text.</div>
+      <div class="notice">This is an extractive map built from sentence and keyword patterns. It keeps source wording, so check important details against the original text.</div>
     </section>
   </section>
   <section class="library-view" id="libraryView" hidden>
@@ -280,27 +279,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
   function toast(message){var t=document.getElementById("toast");t.textContent=message;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove("show");},2800)}
   function escHtml(value){return String(value||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
   function updateAnalyzeState(){analyzeButton.disabled=input.value.trim().length<12;}
-  function openAISetupMessage(){
-    if(window.location.protocol==="file:")return "This file preview cannot reach OpenAI. Double-click Start Threadline.command and use the local app link it opens.";
-    if(window.location.port==="8765")return "You are on the static preview at port 8765. Double-click Start Threadline.command, then use the app link it opens at port 8766.";
-    return "OpenAI server not found. Double-click Start Threadline.command and use the local app link it opens.";
-  }
-  async function refreshApiStatus(){
-    if(window.location.protocol==="file:"){
-      analysisStatus.textContent=openAISetupMessage();
-      return;
-    }
-    try{
-      var response=await fetch("/api/status",{cache:"no-store"});
-      if(!response.ok)throw new Error("OpenAI server is not running.");
-      var status=await response.json();
-      analysisStatus.textContent=status.configured
-        ?"OpenAI is ready. When you build a map, your text is sent for fresh, paraphrased summaries."
-        :"OpenAI server is running, but no API key is set. Restart with Start Threadline.command.";
-    }catch(error){
-      analysisStatus.textContent=openAISetupMessage();
-    }
-  }
   input.addEventListener("input",updateAnalyzeState);
   document.getElementById("chooseFile").addEventListener("click",function(){fileInput.click();});
   dropZone.addEventListener("click",function(e){if(e.target.id!=="chooseFile")fileInput.click();});
@@ -570,112 +548,34 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
     });
   }
   function renderSelectedBlockAndTabs(){renderSelectedBlock();renderBlockStrip();renderCategories();}
-  function loadSampleMap(){
-    var sample={
-      title:"A school garden learns to hold water",
-      blocks:[
-        {title:"A dry garden sparks a question",role:"opening",summary:"Maya notices that the school's garden beds stay hard and thirsty after rainfall. She and her classmates begin tracking moisture to understand why.",sentence_count:2,flow:[
-          {label:"Notice",detail:"Garden soil remains dry even after rain.",next_link:"prompts"},
-          {label:"Investigate",detail:"Maya and classmates begin measuring the beds.",next_link:""}
-        ]},
-        {title:"The class compares two approaches",role:"development",summary:"Students test whether a layer of fallen leaves can help soil retain moisture. They compare treated beds with similar plots left uncovered.",sentence_count:2,flow:[
-          {label:"Plan",detail:"Use comparable garden plots for a fair trial.",next_link:"tests"},
-          {label:"Compare",detail:"Track mulched soil alongside uncovered beds.",next_link:""}
-        ]},
-        {title:"The first fix reveals a new problem",role:"turning point",summary:"The covered beds hold water better, but weeds push through the thinnest patches. The class responds by making the leaf layer deeper and continuing its observations.",sentence_count:2,flow:[
-          {label:"Result",detail:"The leaf cover helps soil stay moist.",next_link:"but"},
-          {label:"Adjust",detail:"Students add more cover where weeds break through.",next_link:""}
-        ]},
-        {title:"Measured results guide a useful habit",role:"outcome",summary:"By the end of term, the improved garden plots need less watering. Students share what they learned, showing how a small measured trial can lead to a practical change.",sentence_count:2,flow:[
-          {label:"Outcome",detail:"The better-performing beds need less watering.",next_link:"leads to"},
-          {label:"Share",detail:"The class passes its findings to other gardeners.",next_link:""}
-        ]}
-      ],
-      categories:{
-        people:["Maya notices the issue and investigates it with her classmates.","Students share what they learned with other school gardeners."],
-        context:["The school garden's soil stays dry and compact after rainfall."],
-        conflict:["The class wants the garden to hold moisture, but needs to find a method that works."],
-        key_events:["Students compare covered and uncovered plots.","The leaf layer improves moisture retention, while thin spots allow weeds through."],
-        turning_points:["Weeds expose a weakness in the first trial, prompting the class to increase the leaf cover."],
-        outcome:["The improved beds need less watering, and the students share the results."],
-        themes:["Small trials can turn an observation into a practical solution.","Measuring results helps people adjust a promising idea."]
-      }
-    };
-    input.value="Maya noticed that the school garden soil stayed hard and dry even after rain. She and her classmates measured the beds for several weeks. They wondered if fallen leaves could help the ground hold water. The class covered some garden plots with leaf mulch and left similar plots uncovered. After a month, the covered soil held more moisture, but weeds grew through the thinnest patches. The students added a deeper layer and kept tracking each bed. By the end of term, the improved plots needed less watering. The class shared its results with other school gardeners. Their small trial showed how observation and measurement can guide a practical change.";
-    currentFileName="";
-    updateAnalyzeState();
-    applyOpenAIMap(sample);
-    activeBlock=0;activeCategory="key_events";
-    currentMapTitle=sample.title;
-    document.getElementById("mapTitle").textContent=currentMapTitle;
-    document.getElementById("mapSub").textContent="A ready-to-explore sample · "+blocks.length+" ordered blocks.";
-    document.getElementById("analysisMeta").textContent=blocks.length+" BLOCKS  ·  "+(input.value.match(/\S+/g)||[]).length+" WORDS";
-    renderSelectedBlockAndTabs();
-    ingest.hidden=true;analysis.hidden=false;newMap.hidden=false;libraryView.hidden=true;
-    analysisStatus.textContent="Sample map loaded. This example works without an API key.";
-    window.scrollTo({top:0,behavior:"smooth"});
-  }
-  function applyOpenAIMap(data){
-    var roleLabels={opening:"Opening context",development:"Development","turning point":"Turning point",outcome:"Outcome / closing"};
-    blocks=(Array.isArray(data.blocks)?data.blocks:[]).map(function(block,index){
-      var flow=(Array.isArray(block.flow)?block.flow:[]).map(function(part){return {label:String(part.label||"Idea"),detail:String(part.detail||""),next_link:String(part.next_link||"then")};}).filter(function(part){return part.detail;});
-      if(!flow.length)flow=[{label:"Main idea",detail:String(block.summary||""),next_link:""}];
-      return {
-        title:String(block.title||"Text block "+(index+1)),
-        role:roleLabels[block.role]||"Development",
-        summary:String(block.summary||""),
-        sentence_count:Number(block.sentence_count)||0,
-        sentences:[],
-        flow:flow,
-        index:index
-      };
-    });
-    var rawCategories=data.categories||{};
-    categories=categoryDefinitions.filter(function(definition){
-      return definition.id!=="people"&&Array.isArray(rawCategories[definition.id]);
-    }).map(function(definition){
-      var items=rawCategories[definition.id].map(function(item){return String(item||"").trim();}).filter(Boolean);
-      return {id:definition.id,name:definition.name,items:items.length?items:["No clear items of this type were detected."]};
-    });
-    var people=Array.isArray(rawCategories.people)?rawCategories.people.map(function(item){return String(item||"").trim();}).filter(Boolean):[];
-    if(people.length)categories.unshift({id:"people",name:"People / subjects",items:people});
-  }
-  analyzeButton.addEventListener("click",async function(){
+  analyzeButton.addEventListener("click",function(){
     var text=normalizeText(input.value);
     if(text.length<12){toast("Add a little more text to build a useful map.");return;}
-    analyzeButton.disabled=true;analyzeButton.textContent="Asking OpenAI to map the text…";
-    analysisStatus.textContent="OpenAI is reading the source and writing a fresh, paraphrased map…";
+    analyzeButton.disabled=true;
+    analyzeButton.textContent="Analyzing in browser…";
+    analysisStatus.textContent="Finding text blocks and representative sentences locally…";
     try{
-      var response=await fetch("/api/analyze",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({text:text})
-      });
-      var data;
-      try{data=await response.json();}catch(error){data={};}
-      if(!response.ok)throw new Error(data.error||"OpenAI could not build this map. Please try again.");
-      applyOpenAIMap(data);
-      if(!blocks.length)throw new Error("OpenAI returned no readable blocks. Please try again with more text.");
+      blocks=makeBlocks(text);
+      if(!blocks.length)throw new Error("No readable sentences were found. Add more text and try again.");
       activeBlock=0;activeCategory="key_events";
-      currentMapTitle=currentFileName?currentFileName.replace(/\.[^.]+$/,""):(data.title||blocks[0].title||"A path through your text");
+      buildCategories();
+      currentMapTitle=currentFileName?currentFileName.replace(/\.[^.]+$/," ").trim():"A path through your text";
       document.getElementById("mapTitle").textContent=currentMapTitle;
-      document.getElementById("mapSub").textContent="Follow "+blocks.length+" ordered block"+(blocks.length===1?"":"s")+" from beginning to end.";
+      document.getElementById("mapSub").textContent="Explore "+blocks.length+" ordered blocks. Summaries select representative sentences from your text.";
       document.getElementById("analysisMeta").textContent=blocks.length+" BLOCKS  ·  "+(text.match(/\S+/g)||[]).length+" WORDS";
       renderSelectedBlockAndTabs();
-      ingest.hidden=true;analysis.hidden=false;newMap.hidden=false;
-      analysisStatus.textContent="Map created with OpenAI in fresh wording. Check important facts against the original text.";
+      ingest.hidden=true;analysis.hidden=false;newMap.hidden=false;libraryView.hidden=true;
+      analysisStatus.textContent="Map built in your browser. Source wording is retained; no AI API key is required.";
+      toast("Map built locally. No AI API key needed.");
       window.scrollTo({top:0,behavior:"smooth"});
     }catch(error){
-      analysisStatus.textContent=error instanceof TypeError
-        ?openAISetupMessage()
-        :(error.message||"OpenAI could not build this map. Please try again.");
+      analysisStatus.textContent=error.message||"Could not analyze that text. Try adding more content.";
       toast(analysisStatus.textContent);
     }finally{
-      analyzeButton.innerHTML='Build with OpenAI <span aria-hidden="true">→</span>';
+      analyzeButton.innerHTML='Analyze text <span aria-hidden="true">→</span>';
       updateAnalyzeState();
     }
   });
-  document.getElementById("sampleMapButton").addEventListener("click",loadSampleMap);
   newMap.addEventListener("click",function(){
     input.value="";fileInput.value="";fileMeta.textContent="";
     blocks=[];categories=[];activeBlock=0;activeCategory="key_events";
@@ -692,7 +592,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
   document.getElementById("libraryBackButton").addEventListener("click",returnFromLibrary);
   renderSavedConcepts();
   updateAnalyzeState();
-  refreshApiStatus();
 })();
 </script>
 </body>
