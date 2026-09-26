@@ -15,7 +15,7 @@ The HTML app files are the source for each browser app. Threadline’s optional 
 
 ## Project prompts
 
-See [PROMPTS.md](PROMPTS.md) for the prompts describing both apps.
+The app ideas and feature direction began with my original prompts. I used AI to polish their wording with a few minor changes while keeping the core ideas intact. Read the [polished prompts](PROMPTS.md) and [original prompts](ORIGINAL_PROMPTS.md).
 
 ## Threadline and OpenAI
 
