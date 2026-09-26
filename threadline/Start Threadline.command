@@ -4,7 +4,7 @@ cd -- "$(dirname "$0")"
 if [ -z "$OPENAI_API_KEY" ]; then
   printf "Threadline keeps your OpenAI API key out of the app and GitHub.\n"
   printf "The key is entered privately here and held only while the local server runs.\n"
-  printf "OpenAI analysis sends your text to OpenAI and may use paid API usage.\n\n"
+  printf "AI analysis sends your text to the AI service and may use paid API usage.\n\n"
   read -rs 'OPENAI_API_KEY?OpenAI API key: '
   printf "\n"
 fi
