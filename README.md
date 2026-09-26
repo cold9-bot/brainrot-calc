@@ -13,9 +13,9 @@ Open the calculator app in calculator/index.html or Threadline in threadline/sto
 
 The HTML app files are the source for each browser app. Threadline’s optional OpenAI integration is in threadline/threadline_server.py; its local launcher and setup notes are beside it. The API key must be supplied locally and is not included in this repository.
 
-## Prompts and process
+## Project prompts
 
-See [PROMPTS.md](PROMPTS.md) for the AI-assisted, polished versions of the original app prompts. The initial concepts and product requirements came from me; AI helped organize and refine the wording.
+See [PROMPTS.md](PROMPTS.md) for the prompts describing both apps.
 
 ## Threadline and OpenAI
 
