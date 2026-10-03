@@ -1,6 +1,6 @@
 # Project prompts
 
-The prompts below describe the features and behavior of each app.
+The prompts below describe the features and behavior of each app. also one important part use spacebar to scroll down
 
 ## Brainrot Calc
 
