@@ -220,7 +220,7 @@ footer a{color:#618276;text-decoration:none}
       <input id="workingName" type="text" maxlength="80" value="Weekday baseline" placeholder="Name this setup">
     </div>
     <button class="btn" id="pasteSetup" type="button" disabled>Paste setup</button>
-    <button class="btn" id="resetSetup" type="button">Reset levers</button>
+    <button class="btn" id="resetSetup" type="button">Reset to starter</button>
     <button class="btn soft" id="tryExample" type="button">Try 20% price cut</button>
     <button class="btn primary" id="runSimulation" type="button">Run simulation →</button>
   </section>
@@ -798,7 +798,7 @@ footer a{color:#618276;text-decoration:none}
   document.getElementById("pasteSetup").addEventListener("click",pasteSetup);
   document.getElementById("resetSetup").addEventListener("click",function(){
     if(!window.confirm("Reset the current inputs to the starter settings? Saved scenarios and recent runs will stay."))return;
-    applyDraft(copyObject(defaults));setStore(KEYS.draft,readDraft());showToast("Inputs reset. Saved runs were kept.");
+    applyDraft(copyObject(defaults));setStore(KEYS.draft,readDraft());var starter=calculate(readDraft());showToast("Starter settings restored: "+money(starter.profit)+" net/day. Saved runs were kept.");
   });
   document.getElementById("cancelModal").addEventListener("click",closeModal);
   document.getElementById("confirmModal").addEventListener("click",confirmModal);
