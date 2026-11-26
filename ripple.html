@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ripple Map is an interactive daily business workflow simulator for exploring how price, promotion, staffing and stock affect a small Indian business.">
+<title>Ripple Map - Small Business Workflow Simulator</title>
+<style>
+:root{color-scheme:light;--ink:#1f3031;--muted:#71807d;--paper:#f4f5f1;--card:#fff;--line:#dde4df;--teal:#167e73;--teal-soft:#e7f4ef;--gold:#d79d48;--gold-soft:#fbf2df;--coral:#cb6554;--coral-soft:#fff0ec;--shadow:0 12px 34px #1b393111}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 3% 0%,#dbece4 0,transparent 32%),radial-gradient(ellipse at 100% 20%,#f3e8d5 0,transparent 25%),var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.topbar{height:68px;background:#ffffffd9;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,54px);position:sticky;top:0;z-index:20;backdrop-filter:blur(14px)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:var(--teal);color:#fff;font-weight:800;font-size:19px}
+.brand-name{font-size:13px;font-weight:800;letter-spacing:.12em}
+.brand-sub{font-size:9px;color:var(--muted);letter-spacing:.13em;margin-top:2px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.top-actions a{font-size:11px;color:var(--muted);text-decoration:none}
+.top-chip{border:1px solid var(--line);border-radius:999px;padding:7px 10px;font-size:10px;color:#477168;background:#f5faf7}
+main{width:min(1480px,calc(100% - 38px));margin:0 auto;padding:32px 0 50px}
+.hero{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:23px}
+.eyebrow{color:var(--teal);font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+h1{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-size:clamp(32px,4vw,48px);font-weight:500;letter-spacing:-1.3px;line-height:1.05;margin:8px 0}
+.hero p{font-size:12px;color:var(--muted);line-height:1.65;margin:0;max-width:690px}
+.hero-tag{flex:0 0 auto;text-align:right;color:var(--muted);font-size:10px;line-height:1.7}
+.hero-tag strong{color:var(--ink);display:block;font-size:11px}
+.toolbar{display:flex;align-items:end;gap:10px;padding:12px;background:#ffffffc9;border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);margin-bottom:15px}
+.toolbar-field{display:flex;flex-direction:column;gap:5px;min-width:160px}
+.toolbar-field.name-field{flex:1;min-width:190px}
+.field-label{font-size:8px;letter-spacing:.12em;color:var(--muted);font-weight:800;text-transform:uppercase}
+input[type=text],input[type=number],select,textarea{border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);padding:8px 9px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#6bb4a0;box-shadow:0 0 0 3px #65b99d1c}
+.toolbar input,.toolbar select{height:35px;font-size:11px}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 12px;color:#445754;font-size:10px;font-weight:750;white-space:nowrap;transition:transform .16s,border-color .16s,background .16s}
+.btn:hover{transform:translateY(-1px);border-color:#99b6ab}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:white}
+.btn.primary:hover{background:#0e6d63}
+.btn.soft{background:var(--teal-soft);color:#276e61;border-color:#cee7dc}
+.btn.danger{color:#a8493b;background:#fff8f6}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.workspace{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(310px,.82fr);gap:15px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow)}
+.canvas{padding:19px;min-width:0}
+.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:15px}
+.panel-head h2{font-size:15px;letter-spacing:-.3px;margin:4px 0}
+.panel-head p{font-size:10px;line-height:1.5;color:var(--muted);margin:4px 0 0}
+.node-count{font:10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#668078;background:#f0f6f2;border:1px solid #dfebe4;border-radius:999px;padding:7px 9px;white-space:nowrap}
+.section-kicker{font-size:8px;color:var(--muted);font-weight:800;letter-spacing:.13em;text-transform:uppercase;margin:14px 0 8px}
+.lever-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.lever-card{border:1px solid #dfe7e1;background:linear-gradient(155deg,#fbfdfb,#f5f8f4);border-radius:11px;padding:11px;min-width:0;position:relative;transition:border-color .2s,box-shadow .2s}
+.lever-card:focus-within{border-color:#85bca9;box-shadow:0 0 0 3px #65b99d15}
+.lever-top{display:flex;justify-content:space-between;align-items:center;gap:5px}
+.lever-index{font:8px ui-monospace,SFMono-Regular,Menlo,monospace;color:#9baaa4}
+.lever-type{font-size:7px;color:var(--teal);font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.lever-card h3{font-size:11px;margin:8px 0 2px;letter-spacing:-.15px}
+.lever-card p{font-size:8px;color:var(--muted);margin:0 0 8px;line-height:1.4;min-height:22px}
+.range-value{display:grid;grid-template-columns:1fr 68px;gap:7px;align-items:center}
+input[type=range]{width:100%;accent-color:var(--teal);height:15px;margin:0}
+.range-value input{width:100%;height:29px;padding:5px 6px;text-align:right;font:10px ui-monospace,SFMono-Regular,Menlo,monospace}
+.lever-unit{position:absolute;right:18px;bottom:16px;font-size:8px;color:#8a9792;pointer-events:none}
+.lever-dual{display:grid;grid-template-columns:1fr;gap:6px;margin-top:7px}
+.compact-field{display:flex;justify-content:space-between;align-items:center;gap:5px;font-size:8px;color:var(--muted)}
+.compact-field input{width:78px;height:25px;font:9px ui-monospace,SFMono-Regular,Menlo,monospace;text-align:right;padding:4px 5px}
+.compact-field span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.flow-callout{margin:12px 0 14px;padding:9px 11px;border-radius:9px;background:#f6f8f4;border:1px dashed #d6e1d9;color:#62736d;font-size:9px;line-height:1.5}
+.flow-callout strong{color:#3e655b}
+.chain-wrap{overflow-x:auto;padding:2px 0 8px;scrollbar-color:#bfd5ca transparent;scrollbar-width:thin}
+.chain{display:flex;align-items:stretch;min-width:700px;gap:0}
+.flow-node{flex:1;min-width:122px;border:1px solid #dfe7e1;border-radius:11px;background:#fff;padding:10px 9px;position:relative;overflow:hidden;transition:box-shadow .25s,border-color .25s}
+.flow-node:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:#86b8a4}
+.flow-node.pressure:before{background:var(--gold)}
+.flow-node.alert:before{background:var(--coral)}
+.flow-node.pulse{animation:node-pulse .62s ease}
+@keyframes node-pulse{0%{box-shadow:0 0 0 0 #4eaa8a33}45%{box-shadow:0 0 0 5px #4eaa8a20;border-color:#57a78d}100%{box-shadow:0 0 0 0 transparent}}
+.node-head{display:flex;justify-content:space-between;align-items:center}
+.node-id{font:8px ui-monospace,SFMono-Regular,Menlo,monospace;color:#97a59f}
+.node-kind{font-size:7px;font-weight:800;letter-spacing:.1em;color:#709489;text-transform:uppercase}
+.flow-node h3{font-size:10px;margin:11px 0 7px;line-height:1.25}
+.node-value{font:700 18px ui-monospace,SFMono-Regular,Menlo,monospace;color:#25433d;letter-spacing:-.7px;white-space:nowrap}
+.flow-node.pressure .node-value{color:#9a6b21}
+.flow-node.alert .node-value{color:#b84e40}
+.node-unit{font-size:8px;color:var(--muted);margin-left:3px}
+.node-detail{font-size:8px;line-height:1.4;color:var(--muted);margin-top:8px;min-height:23px}
+.node-status{font-size:7px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#588172;margin-top:7px}
+.flow-node.pressure .node-status{color:#9a6b21}
+.flow-node.alert .node-status{color:#b84e40}
+.connector{width:27px;flex:0 0 27px;align-self:center;display:flex;flex-direction:column;align-items:center;gap:2px;color:#98aaa2}
+.connector b{font-size:16px;font-weight:400}
+.connector span{font-size:6px;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;color:#91a098}
+.model-details{margin-top:15px;border:1px solid var(--line);border-radius:10px;background:#fcfdfa}
+.model-details summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:center;padding:11px 12px;font-size:9px;font-weight:800;color:#526660}
+.model-details summary::-webkit-details-marker{display:none}
+.model-details summary:after{content:"+";font-size:16px;font-weight:400;color:var(--teal)}
+.model-details[open] summary:after{content:"−"}
+.model-content{border-top:1px solid var(--line);padding:12px}
+.assumption-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.assumption-grid label{display:flex;flex-direction:column;gap:4px;font-size:8px;color:var(--muted);font-weight:700}
+.assumption-grid input{height:30px;width:100%;font-size:9px}
+.product-mix{margin-top:12px}
+.product-mix h3{font-size:9px;margin:0 0 6px;color:#526660}
+.mix-row{display:grid;grid-template-columns:minmax(90px,1.2fr) minmax(55px,.5fr) auto;gap:7px;align-items:center;margin:5px 0}
+.mix-row input{height:29px;font-size:9px;min-width:0}
+.mix-row label{font-size:7px;color:var(--muted)}
+.mix-total{font-size:8px;color:var(--muted);margin-top:5px}
+.formula-note{font-size:8px;line-height:1.55;color:var(--muted);margin:10px 0 0}
+.formula-note code{font:8px ui-monospace,SFMono-Regular,Menlo,monospace;color:#496a5f;background:#f0f5f1;padding:2px 4px;border-radius:4px}
+.scoreboard{padding:17px;position:sticky;top:80px}
+.score-head{display:flex;justify-content:space-between;align-items:start;gap:10px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.score-head h2{font-size:14px;margin:4px 0}
+.live-dot{display:flex;align-items:center;gap:6px;font-size:8px;color:#4e8876;font-weight:800}
+.live-dot i{height:6px;width:6px;border-radius:50%;background:#57aa83;box-shadow:0 0 0 3px #57aa831d}
+.kpi-block{padding:11px 0;border-bottom:1px solid #edf0ec}
+.kpi-label{font-size:8px;color:var(--muted);font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.kpi-major{font:700 24px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-1px;color:#234039;margin:5px 0}
+.kpi-major.negative{color:#bd4e43}
+.kpi-major.positive{color:#26725e}
+.kpi-sub{font-size:8px;color:var(--muted);line-height:1.45}
+.time-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:9px}
+.time-box{background:#f5f8f5;border:1px solid #e7ece7;border-radius:8px;padding:7px}
+.time-box span{display:block;font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.time-box strong{display:block;font:700 11px ui-monospace,SFMono-Regular,Menlo,monospace;color:#29453e;margin-top:4px}
+.flow-stats{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}
+.flow-stat{border:1px solid #e7ece7;border-radius:8px;padding:8px;background:#fff}
+.flow-stat span{display:block;font-size:7px;line-height:1.3;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.flow-stat strong{font:700 12px ui-monospace,SFMono-Regular,Menlo,monospace;display:block;margin-top:4px;color:#344d45}
+.profit-block{margin-top:10px;padding:11px;border:1px solid #dce8e0;border-radius:10px;background:linear-gradient(130deg,#edf7f1,#fff)}
+.profit-block.negative{background:#fff3f0;border-color:#f3d0c8}
+.profit-block .kpi-major{font-size:21px;margin:5px 0 2px}
+.cost-list{margin:8px 0 0;padding:0;list-style:none}
+.cost-list li{display:flex;justify-content:space-between;gap:8px;font-size:8px;color:var(--muted);padding:4px 0;border-top:1px solid #e6ece7}
+.cost-list strong{font:700 8px ui-monospace,SFMono-Regular,Menlo,monospace;color:#495b54}
+.best-sellers{margin-top:12px}
+.best-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.best-head strong{font-size:9px}
+.best-head span{font-size:7px;color:var(--muted)}
+.product-table{width:100%;border-collapse:collapse}
+.product-table th{text-align:left;padding:5px 4px;color:#899690;font-size:7px;letter-spacing:.08em;text-transform:uppercase;font-weight:800}
+.product-table td{padding:6px 4px;border-top:1px solid #edf0ec;font-size:8px;color:#50615a}
+.product-table td:last-child{text-align:right;font:700 9px ui-monospace,SFMono-Regular,Menlo,monospace}
+.seller-badge{display:inline-block;background:var(--gold-soft);color:#8c6426;padding:3px 5px;border-radius:999px;font-size:6px;font-weight:900;letter-spacing:.02em;margin-left:4px;white-space:nowrap}
+.loop-note{margin-top:11px;padding:9px;background:#f2f7f4;border-radius:8px;font-size:8px;line-height:1.5;color:#597169}
+.loop-note strong{color:#2f6d5b}
+.records{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.record-panel{padding:16px;min-width:0}
+.record-head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:10px}
+.record-head h2{font-size:13px;margin:0}
+.record-head p{font-size:8px;color:var(--muted);margin:4px 0 0}
+.record-count{font:9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#71857d}
+.empty-state{padding:15px;border:1px dashed #d9e2dc;border-radius:9px;text-align:center;font-size:9px;line-height:1.5;color:var(--muted);background:#fafcf9}
+.record-list{display:flex;flex-direction:column;gap:7px}
+.record{border:1px solid #e5eae5;border-radius:9px;padding:9px 10px;background:#fff;min-width:0}
+.record-main{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.record-title{font-size:9px;font-weight:800;color:#334a43;overflow-wrap:anywhere}
+.record-meta{font-size:7px;color:var(--muted);margin-top:4px}
+.record-actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.record-actions .btn{font-size:8px;padding:5px 7px}
+.save-badge{display:inline-block;margin-left:5px;color:#2b7962;font-size:7px;font-weight:800}
+.note-input{width:100%;min-height:45px;margin-top:8px;resize:vertical;font-size:9px}
+footer{padding:16px 2px 0;display:flex;justify-content:space-between;gap:12px;color:#87918c;font-size:8px;line-height:1.5}
+footer a{color:#618276;text-decoration:none}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,12px);opacity:0;pointer-events:none;z-index:50;background:#203932;color:#fff;padding:10px 14px;border-radius:9px;font-size:10px;box-shadow:0 8px 25px #12231f33;transition:opacity .18s,transform .18s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.modal-backdrop{position:fixed;inset:0;background:#15282466;z-index:60;display:grid;place-items:center;padding:18px}
+.modal-backdrop[hidden]{display:none}
+.modal{width:min(410px,100%);padding:19px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 80px #13261c40}
+.modal h2{font-size:15px;margin:0 0 5px}
+.modal p{font-size:9px;line-height:1.5;color:var(--muted);margin:0 0 12px}
+.modal label{display:block;font-size:8px;font-weight:800;letter-spacing:.1em;color:#71807d;margin:10px 0 5px}
+.modal input,.modal textarea{width:100%;font-size:10px}
+.modal-actions{display:flex;justify-content:end;gap:7px;margin-top:13px}
+@media(max-width:1120px){.workspace{grid-template-columns:minmax(0,1.4fr) minmax(285px,.85fr)}.lever-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.assumption-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:850px){.workspace{grid-template-columns:1fr}.scoreboard{position:static}.hero{align-items:start;flex-direction:column}.hero-tag{text-align:left;display:flex;gap:12px}.records{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){main{width:calc(100% - 22px);padding-top:23px}.topbar{height:59px;padding:0 12px}.top-chip{display:none}.toolbar{align-items:stretch;flex-wrap:wrap}.toolbar-field.name-field{flex-basis:100%}.toolbar-field{flex:1;min-width:120px}.toolbar .btn{flex:1}.canvas,.scoreboard,.record-panel{padding:13px}.lever-grid{grid-template-columns:1fr 1fr}.chain{min-width:700px}.assumption-grid{grid-template-columns:1fr 1fr}.records{grid-template-columns:1fr}.hero p{font-size:11px}.hero-tag{display:none}.product-table th,.product-table td{font-size:7px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="Back to portfolio">
+    <span class="brand-icon">↗</span><span><span class="brand-name">RIPPLE MAP</span><span class="brand-sub">SMALL BUSINESS SIMULATOR</span></span>
+  </a>
+  <div class="top-actions"><a href="index.html">Portfolio</a><span class="top-chip">Daily model · INR</span></div>
+</header>
+<main>
+  <section class="hero">
+    <div><div class="eyebrow">A SMALL CHANGE CAN TRAVEL FAR</div><h1>See how the pieces affect each other.</h1><p>Adjust a business lever and follow its effects through customer traffic, the peak rush, team load, wait time, and customer rating. The scoreboard recalculates alongside the workflow.</p></div>
+    <div class="hero-tag"><strong>ILLUSTRATIVE DAILY MODEL</strong>For exploring assumptions, not forecasting actual business results.</div>
+  </section>
+
+  <section class="toolbar" aria-label="Simulation controls">
+    <div class="toolbar-field">
+      <label class="field-label" for="businessType">Business profile</label>
+      <select id="businessType"><option value="cafe">Cafe / quick service</option><option value="retail">Kirana / retail</option></select>
+    </div>
+    <div class="toolbar-field name-field">
+      <label class="field-label" for="workingName">Current setup</label>
+      <input id="workingName" type="text" maxlength="80" value="Weekday baseline" placeholder="Name this setup">
+    </div>
+    <button class="btn" id="pasteSetup" type="button" disabled>Paste setup</button>
+    <button class="btn" id="resetSetup" type="button">Reset levers</button>
+    <button class="btn primary" id="runSimulation" type="button">Run simulation →</button>
+  </section>
+
+  <section class="workspace">
+    <section class="panel canvas" aria-labelledby="workflowTitle">
+      <div class="panel-head">
+        <div><div class="eyebrow">INTERACTIVE WORKFLOW</div><h2 id="workflowTitle">Four levers, five connected outcomes</h2><p>Change any lever. The full chain and scoreboard respond immediately.</p></div>
+        <span class="node-count">09 ACTIVE NODES</span>
+      </div>
+
+      <div class="section-kicker">01-04 · Business levers</div>
+      <div class="lever-grid">
+        <article class="lever-card" data-node="price">
+          <div class="lever-top"><span class="lever-index">NODE 01</span><span class="lever-type">LEVER</span></div>
+          <h3>Average item price</h3><p>Daily selling price per item</p>
+          <div class="range-value"><input id="priceRange" type="range" min="0" max="500" step="5" value="150" aria-label="Average item price slider"><input id="priceInput" type="number" min="0" max="100000" step="5" value="150" aria-label="Average item price in rupees"></div>
+        </article>
+        <article class="lever-card" data-node="ads">
+          <div class="lever-top"><span class="lever-index">NODE 02</span><span class="lever-type">LEVER</span></div>
+          <h3>Ad / promo spend</h3><p>Instagram, delivery apps, flyers</p>
+          <div class="range-value"><input id="adsRange" type="range" min="0" max="5000" step="50" value="500" aria-label="Daily marketing spend slider"><input id="adsInput" type="number" min="0" max="1000000" step="50" value="500" aria-label="Daily marketing spend in rupees"></div>
+        </article>
+        <article class="lever-card" data-node="staff">
+          <div class="lever-top"><span class="lever-index">NODE 03</span><span class="lever-type">LEVER</span></div>
+          <h3>Staff on shift</h3><p>Count and daily wage</p>
+          <div class="range-value"><input id="staffRange" type="range" min="0" max="15" step="1" value="3" aria-label="Number of staff slider"><input id="staffInput" type="number" min="0" max="100" step="1" value="3" aria-label="Number of staff"></div>
+          <label class="compact-field lever-dual"><span>Wage per person / day</span><input id="wageInput" type="number" min="0" max="100000" step="50" value="600" aria-label="Daily wage per staff member in rupees"></label>
+        </article>
+        <article class="lever-card" data-node="inventory">
+          <div class="lever-top"><span class="lever-index">NODE 04</span><span class="lever-type">LEVER</span></div>
+          <h3>Inventory in</h3><p>Total units available today</p>
+          <div class="range-value"><input id="inventoryRange" type="range" min="0" max="1000" step="10" value="200" aria-label="Inventory slider"><input id="inventoryInput" type="number" min="0" max="100000" step="10" value="200" aria-label="Inventory units available"></div>
+        </article>
+      </div>
+
+      <div class="flow-callout"><strong>How the levers feed the chain:</strong> price, ads, and your previous rating shape traffic. Traffic creates the peak rush; peak load is shared across staff. Wait time and stockouts shape the next rating.</div>
+
+      <div class="section-kicker">05-09 · Cause-and-effect chain</div>
+      <div class="chain-wrap" aria-label="Scrollable workflow">
+        <div class="chain">
+          <article class="flow-node" id="nodeTraffic" aria-live="polite">
+            <div class="node-head"><span class="node-id">NODE 05</span><span class="node-kind">DEMAND</span></div>
+            <h3>Customer traffic</h3>
+            <div><span class="node-value" id="outTraffic">113</span><span class="node-unit">/ day</span></div>
+            <div class="node-detail" id="trafficDetail">Compared with the daily reference.</div><div class="node-status" id="trafficStatus">Estimated visits</div>
+          </article>
+          <div class="connector" aria-hidden="true"><b>→</b><span>rush</span></div>
+          <article class="flow-node" id="nodePeak" aria-live="polite">
+            <div class="node-head"><span class="node-id">NODE 06</span><span class="node-kind">CAPACITY</span></div>
+            <h3>Peak hour rush</h3>
+            <div><span class="node-value" id="outPeak">25</span><span class="node-unit">/ hour</span></div>
+            <div class="node-detail" id="peakDetail">55% in the chosen peak window.</div><div class="node-status">Peak concentration</div>
+          </article>
+          <div class="connector" aria-hidden="true"><b>→</b><span>load</span></div>
+          <article class="flow-node" id="nodeLoad" aria-live="polite">
+            <div class="node-head"><span class="node-id">NODE 07</span><span class="node-kind">TEAM</span></div>
+            <h3>Staff load</h3>
+            <div><span class="node-value" id="outLoad">66</span><span class="node-unit">%</span></div>
+            <div class="node-detail" id="loadDetail">Peak customers per person.</div><div class="node-status" id="loadStatus">Within model threshold</div>
+          </article>
+          <div class="connector" aria-hidden="true"><b>→</b><span>wait</span></div>
+          <article class="flow-node" id="nodeWait" aria-live="polite">
+            <div class="node-head"><span class="node-id">NODE 08</span><span class="node-kind">SERVICE</span></div>
+            <h3>Service wait</h3>
+            <div><span class="node-value" id="outWait">13</span><span class="node-unit">min</span></div>
+            <div class="node-detail" id="waitDetail">Base wait plus load effect.</div><div class="node-status" id="waitStatus">Estimated queue time</div>
+          </article>
+          <div class="connector" aria-hidden="true"><b>→</b><span>rating</span></div>
+          <article class="flow-node" id="nodeRating" aria-live="polite">
+            <div class="node-head"><span class="node-id">NODE 09</span><span class="node-kind">EXPERIENCE</span></div>
+            <h3>Customer rating</h3>
+            <div><span class="node-value" id="outRating">3.1</span><span class="node-unit">/ 5 ★</span></div>
+            <div class="node-detail" id="ratingDetail">Wait plus stockout effect.</div><div class="node-status" id="ratingStatus">Feeds next week</div>
+          </article>
+        </div>
+      </div>
+
+      <details class="model-details" id="assumptions">
+        <summary><span>Model assumptions, product mix, and formula settings</span><span>Editable inputs</span></summary>
+        <div class="model-content">
+          <div class="assumption-grid">
+            <label>Base customers / day<input class="model-input" id="baseCustomers" type="number" min="0" step="1" value="100"></label>
+            <label>Reference item price (₹)<input class="model-input" id="referencePrice" type="number" min="1" step="5" value="150"></label>
+            <label>Reference ad spend / day (₹)<input class="model-input" id="referenceAds" type="number" min="0" step="50" value="500"></label>
+            <label>Previous review score<input class="model-input" id="previousRating" type="number" min="1" max="5" step="0.1" value="4.5"></label>
+            <label>Avg items / order<input class="model-input" id="itemsPerOrder" type="number" min="0" step="0.1" value="1.4"></label>
+            <label>Wholesale cost / item (₹)<input class="model-input" id="wholesaleCost" type="number" min="0" step="1" value="60"></label>
+            <label>Fixed rent + utilities / day (₹)<input class="model-input" id="fixedDaily" type="number" min="0" step="50" value="1200"></label>
+            <label>Spoilage / dead stock (%)<input class="model-input" id="spoilageRate" type="number" min="0" max="100" step="1" value="30"></label>
+          </div>
+          <div class="product-mix">
+            <h3>Top-product mix (used to estimate the ranking)</h3>
+            <div class="mix-row"><label for="product1Name">Item 1</label><input id="product1Name" type="text" maxlength="36" value="Masala chai"><input id="product1Share" class="model-input" type="number" min="0" max="100" value="50" aria-label="Masala chai demand share percent"><label>% mix</label></div>
+            <div class="mix-row"><label for="product2Name">Item 2</label><input id="product2Name" type="text" maxlength="36" value="Coffee"><input id="product2Share" class="model-input" type="number" min="0" max="100" value="30" aria-label="Coffee demand share percent"><label>% mix</label></div>
+            <div class="mix-row"><label for="product3Name">Item 3</label><input id="product3Name" type="text" maxlength="36" value="Snack"><input id="product3Share" class="model-input" type="number" min="0" max="100" value="20" aria-label="Snack demand share percent"><label>% mix</label></div>
+            <div class="mix-total" id="mixTotal">Shares are normalized to 100% for the estimate.</div>
+          </div>
+          <div class="product-mix">
+            <h3>Formula assumptions</h3>
+            <div class="assumption-grid">
+              <label>Price sensitivity multiplier<input class="model-input" id="priceElasticity" type="number" min="0" max="5" step="0.1" value="1.5"></label>
+              <label>Ad response multiplier<input class="model-input" id="adResponse" type="number" min="0" max="3" step="0.1" value="0.4"></label>
+              <label>Peak share of daily traffic (%)<input class="model-input" id="peakShare" type="number" min="0" max="100" step="1" value="55"></label>
+              <label>Peak window hours<input class="model-input" id="peakHours" type="number" min="0.5" max="24" step="0.5" value="2.5"></label>
+              <label>Staff load multiplier<input class="model-input" id="loadMultiplier" type="number" min="0" max="30" step="0.5" value="8"></label>
+              <label>Wait-time base (minutes)<input class="model-input" id="baseWait" type="number" min="0" max="60" step="0.5" value="3"></label>
+              <label>Wait impact multiplier<input class="model-input" id="waitImpact" type="number" min="0" max="1" step="0.01" value="0.15"></label>
+              <label>Stockout rating penalty<input class="model-input" id="stockoutPenalty" type="number" min="0" max="4" step="0.1" value="0.8"></label>
+              <label>High-load threshold (%)<input class="model-input" id="loadThreshold" type="number" min="0" max="100" step="1" value="70"></label>
+            </div>
+          </div>
+          <p class="formula-note">Traffic = base customers × (1 - price sensitivity × price change) × (1 + ad response × ad change) × (previous rating ÷ 4). Stress/load = peak customers per hour ÷ staff × load multiplier, capped at 100%. Wait = base wait + load × wait impact. Rating = 5 - (wait × wait impact) - stockout penalty, clamped from 1 to 5. Values are scenario assumptions, not measured Bengaluru market data.</p>
+          <p class="formula-note">This daily model repeats the same day for 7-day and 30-day totals. It does not model weekends, taxes, delivery-app commissions, payment mix, or product-specific prices and stock. The product table allocates total sold units by your estimated sales mix. Use it to explore relationships, not as a business forecast.</p>
+        </div>
+      </details>
+    </section>
+
+    <aside class="panel scoreboard" aria-labelledby="scoreTitle">
+      <div class="score-head"><div><div class="eyebrow">LIVE SCOREBOARD</div><h2 id="scoreTitle">Daily business snapshot</h2></div><span class="live-dot"><i></i> UPDATING</span></div>
+      <div class="kpi-block">
+        <div class="kpi-label">Units sold · daily baseline</div><div class="kpi-major" id="dailyUnits">158</div>
+        <div class="kpi-sub" id="unitsLimitNote">Sales are capped by available stock.</div>
+        <div class="time-strip"><div class="time-box"><span>Day</span><strong id="unitsDay">158</strong></div><div class="time-box"><span>7 days</span><strong id="unitsWeek">1,106</strong></div><div class="time-box"><span>30 days</span><strong id="unitsMonth">4,740</strong></div></div>
+      </div>
+      <div class="flow-stats">
+        <div class="flow-stat"><span>Footfall · 7 days</span><strong id="footfallWeek">790</strong></div>
+        <div class="flow-stat"><span>Footfall · 30 days</span><strong id="footfallMonth">3,375</strong></div>
+      </div>
+      <div class="flow-stats">
+        <div class="flow-stat"><span>Money in · sales</span><strong id="moneyIn">₹23,700</strong></div>
+        <div class="flow-stat"><span>Money out · costs</span><strong id="moneyOut">₹13,?00</strong></div>
+      </div>
+      <div class="profit-block" id="profitBlock">
+        <div class="kpi-label">Net profit / loss · per day</div><div class="kpi-major" id="netProfit">₹0</div>
+        <div class="kpi-sub">Sales minus modeled daily expenses.</div>
+      </div>
+      <ul class="cost-list" aria-label="Daily expense breakdown">
+        <li><span>Wholesale cost</span><strong id="costWholesale">₹0</strong></li>
+        <li><span>Staff wages</span><strong id="costStaff">₹0</strong></li>
+        <li><span>Ads / promotions</span><strong id="costAds">₹0</strong></li>
+        <li><span>Spoilage / dead stock</span><strong id="costSpoilage">₹0</strong></li>
+        <li><span>Fixed rent + utilities</span><strong id="costFixed">₹0</strong></li>
+      </ul>
+      <div class="best-sellers">
+        <div class="best-head"><strong>Best-selling products</strong><span>Estimated units / day</span></div>
+        <table class="product-table"><thead><tr><th>Product</th><th>Mix</th><th>Units</th></tr></thead><tbody id="productRows"></tbody></table>
+      </div>
+      <div class="loop-note"><strong>Next-week loop:</strong> this run's rating becomes the review input for the next-week traffic estimate: <b id="nextWeekTraffic">77 customers/day</b>.</div>
+    </aside>
+  </section>
+
+  <section class="records">
+    <section class="panel record-panel" aria-labelledby="recentTitle">
+      <div class="record-head"><div><h2 id="recentTitle">Recent simulations</h2><p>Each run is kept here until you delete it.</p></div><span class="record-count" id="recentCount">0 runs</span></div>
+      <div class="record-list" id="recentList"><div class="empty-state">No runs yet. Adjust a lever and select <strong>Run simulation</strong>.</div></div>
+    </section>
+    <section class="panel record-panel" aria-labelledby="savedTitle">
+      <div class="record-head"><div><h2 id="savedTitle">Saved scenarios</h2><p>Named setups stay in this browser until you delete them.</p></div><span class="record-count" id="savedCount">0 saved</span></div>
+      <div class="record-list" id="savedList"><div class="empty-state">Save a run to build your scenario library.</div></div>
+    </section>
+  </section>
+  <footer><span>All calculations are illustrative and run in this browser. Your scenarios are saved locally on this device.</span><a href="index.html">Back to portfolio</a></footer>
+</main>
+
+<div class="modal-backdrop" id="saveModal" hidden>
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <h2 id="modalTitle">Save scenario</h2><p id="modalDescription">Give this run a name so you can return to it later.</p>
+    <label for="modalName">SCENARIO NAME</label><input id="modalName" type="text" maxlength="80" placeholder="e.g. Weekend promo test">
+    <label for="modalNote">NOTES (OPTIONAL)</label><textarea id="modalNote" rows="3" placeholder="What are you testing or assuming?"></textarea>
+    <div class="modal-actions"><button class="btn" id="cancelModal" type="button">Cancel</button><button class="btn primary" id="confirmModal" type="button">Save scenario</button></div>
+  </section>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+  var KEYS={draft:"ripplemap.draft.v1",runs:"ripplemap.runs.v1",saved:"ripplemap.saved.v1",clipboard:"ripplemap.clipboard.v1"};
+  var defaults={
+    businessType:"cafe",price:150,ads:500,staff:3,wage:600,inventory:200,
+    baseCustomers:100,referencePrice:150,referenceAds:500,previousRating:4.5,itemsPerOrder:1.4,
+    wholesaleCost:60,fixedDaily:1200,spoilageRate:30,priceElasticity:1.5,adResponse:0.4,
+    peakShare:55,peakHours:2.5,loadMultiplier:8,baseWait:3,waitImpact:0.15,stockoutPenalty:0.8,loadThreshold:70,
+    products:[{name:"Masala chai",share:50},{name:"Coffee",share:30},{name:"Snack",share:20}]
+  };
+  function getStore(key,fallback){try{var value=localStorage.getItem(key);return value?JSON.parse(value):fallback;}catch(e){return fallback;}}
+  function setStore(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch(e){return false;}}
+  function copyObject(value){return JSON.parse(JSON.stringify(value));}
+  function numberValue(id,fallback){var el=document.getElementById(id);var n=Number(el.value);return Number.isFinite(n)?n:fallback;}
+  function safeNumber(value,fallback,min,max){var n=Number(value);if(!Number.isFinite(n))n=fallback;if(typeof min==="number")n=Math.max(min,n);if(typeof max==="number")n=Math.min(max,n);return n;}
+  function getText(id,fallback){var value=document.getElementById(id).value.trim();return value||fallback;}
+  function fmt(n,digits){return new Intl.NumberFormat("en-IN",{maximumFractionDigits:digits||0,minimumFractionDigits:0}).format(Number.isFinite(n)?n:0);}
+  function money(n){return (n<0?"-":"")+"₹"+fmt(Math.abs(n),0);}
+  function shortTime(iso){try{return new Intl.DateTimeFormat("en-IN",{dateStyle:"medium",timeStyle:"short"}).format(new Date(iso));}catch(e){return "";}}
+  function makeId(){return "r"+Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+  var cachedDraft=getStore(KEYS.draft,null);
+  var draft=Object.assign(copyObject(defaults),cachedDraft&&typeof cachedDraft==="object"?cachedDraft:{});
+  if(!Array.isArray(draft.products)||draft.products.length!==3)draft.products=copyObject(defaults.products);
+  var recentRuns=getStore(KEYS.runs,[]);if(!Array.isArray(recentRuns))recentRuns=[];
+  var savedScenarios=getStore(KEYS.saved,[]);if(!Array.isArray(savedScenarios))savedScenarios=[];
+  var scenarioClipboard=getStore(KEYS.clipboard,null);
+  var lastOutputs={};
+  var pendingRunId=null;
+  var toastTimer=null;
+  var bindings=[
+    ["priceRange","priceInput","price"],["adsRange","adsInput","ads"],
+    ["staffRange","staffInput","staff"],["inventoryRange","inventoryInput","inventory"]
+  ];
+  var modelFields=[
+    ["baseCustomers","baseCustomers"],["referencePrice","referencePrice"],["referenceAds","referenceAds"],
+    ["previousRating","previousRating"],["itemsPerOrder","itemsPerOrder"],["wholesaleCost","wholesaleCost"],
+    ["fixedDaily","fixedDaily"],["spoilageRate","spoilageRate"],["priceElasticity","priceElasticity"],
+    ["adResponse","adResponse"],["peakShare","peakShare"],["peakHours","peakHours"],
+    ["loadMultiplier","loadMultiplier"],["baseWait","baseWait"],["waitImpact","waitImpact"],
+    ["stockoutPenalty","stockoutPenalty"],["loadThreshold","loadThreshold"],["product1Share","product1Share"],
+    ["product2Share","product2Share"],["product3Share","product3Share"]
+  ];
+
+  function applyDraft(value){
+    var c=Object.assign(copyObject(defaults),value||{});
+    if(!Array.isArray(c.products)||c.products.length!==3)c.products=copyObject(defaults.products);
+    document.getElementById("businessType").value=c.businessType==="retail"?"retail":"cafe";
+    document.getElementById("workingName").value=c.name||"Weekday baseline";
+    bindings.forEach(function(row){var key=row[2];document.getElementById(row[0]).value=c[key];document.getElementById(row[1]).value=c[key];});
+    document.getElementById("wageInput").value=c.wage;
+    modelFields.forEach(function(row){
+      var id=row[0],key=row[1],valueForField=c[key];
+      if(key.indexOf("product")===0&&key.indexOf("Share")<0)valueForField=c.products[Number(key.slice(7,8))-1].name;
+      if(key==="product1Share")valueForField=c.products[0].share;
+      if(key==="product2Share")valueForField=c.products[1].share;
+      if(key==="product3Share")valueForField=c.products[2].share;
+      if(valueForField!==undefined&&document.getElementById(id))document.getElementById(id).value=valueForField;
+    });
+    document.getElementById("product1Name").value=c.products[0].name;
+    document.getElementById("product2Name").value=c.products[1].name;
+    document.getElementById("product3Name").value=c.products[2].name;
+    document.getElementById("pasteSetup").disabled=!scenarioClipboard;
+    renderResults(false);
+  }
+  function readDraft(){
+    var c={businessType:document.getElementById("businessType").value,name:getText("workingName","Untitled setup")};
+    bindings.forEach(function(row){c[row[2]]=safeNumber(document.getElementById(row[1]).value,defaults[row[2]],row[2]==="staff"?0:0,1000000);});
+    c.wage=safeNumber(document.getElementById("wageInput").value,defaults.wage,0,1000000);
+    modelFields.forEach(function(row){
+      if(row[1].indexOf("product")===0)return;
+      var defaultValue=defaults[row[1]];
+      var min=row[1]==="previousRating"?1:0;
+      var max=row[1]==="previousRating"?5:(row[1]==="spoilageRate"||row[1]==="peakShare"||row[1]==="loadThreshold"?100:1000000);
+      c[row[1]]=safeNumber(document.getElementById(row[0]).value,defaultValue,min,max);
+    });
+    c.products=[
+      {name:getText("product1Name","Item 1"),share:safeNumber(document.getElementById("product1Share").value,50,0,100)},
+      {name:getText("product2Name","Item 2"),share:safeNumber(document.getElementById("product2Share").value,30,0,100)},
+      {name:getText("product3Name","Item 3"),share:safeNumber(document.getElementById("product3Share").value,20,0,100)}
+    ];
+    return c;
+  }
+  function calcTraffic(c,rating){
+    var priceChange=c.referencePrice>0?(c.price-c.referencePrice)/c.referencePrice:0;
+    var adChange=c.referenceAds>0?(c.ads-c.referenceAds)/c.referenceAds:(c.ads===0?0:1);
+    var priceFactor=Math.max(0,1-c.priceElasticity*priceChange);
+    var adFactor=Math.max(0,1+c.adResponse*adChange);
+    var ratingFactor=Math.max(0,rating/4);
+    return Math.max(0,c.baseCustomers*priceFactor*adFactor*ratingFactor);
+  }
+  function calculate(c){
+    var rawTraffic=calcTraffic(c,c.previousRating);
+    var customers=Math.round(rawTraffic);
+    var peakShare=c.peakShare/100;
+    var peakCustomersPerHour=c.peakHours>0?(customers*peakShare)/c.peakHours:0;
+    var staffLoad=c.staff>0?Math.min(100,(peakCustomersPerHour/c.staff)*c.loadMultiplier):100;
+    var wait=c.baseWait+(staffLoad*c.waitImpact);
+    var demandUnits=customers*c.itemsPerOrder;
+    var stockout=demandUnits>c.inventory;
+    var unitsSold=Math.min(Math.max(0,Math.round(demandUnits)),Math.max(0,Math.floor(c.inventory)));
+    var rating=Math.min(5,Math.max(1,5-(wait*c.waitImpact)-(stockout?c.stockoutPenalty:0)));
+    var nextWeekTraffic=Math.round(calcTraffic(c,rating));
+    var unsold=Math.max(0,c.inventory-unitsSold);
+    var spoilageLoss=unsold*c.wholesaleCost*(c.spoilageRate/100);
+    var sales=unitsSold*c.price;
+    var wholesale=unitsSold*c.wholesaleCost;
+    var staffCost=c.staff*c.wage;
+    var expenses=wholesale+staffCost+c.ads+spoilageLoss+c.fixedDaily;
+    var profit=sales-expenses;
+    var productShares=c.products.map(function(item){return Math.max(0,item.share);});
+    var shareTotal=productShares.reduce(function(a,b){return a+b;},0);
+    if(shareTotal===0){productShares=[1,1,1];shareTotal=3;}
+    var exact=productShares.map(function(share){return unitsSold*share/shareTotal;});
+    var counts=exact.map(function(value){return Math.floor(value);});
+    var left=unitsSold-counts.reduce(function(a,b){return a+b;},0);
+    var remainders=exact.map(function(value,index){return {index:index,remainder:value-Math.floor(value)};}).sort(function(a,b){return b.remainder-a.remainder;});
+    for(var i=0;i<left;i++)counts[remainders[i%remainders.length].index]++;
+    var products=c.products.map(function(item,index){return {name:item.name||("Item "+(index+1)),share:shareTotal?productShares[index]/shareTotal*100:33.333,units:counts[index]};}).sort(function(a,b){return b.units-a.units;});
+    return {
+      customers:customers,rawTraffic:rawTraffic,peak:peakCustomersPerHour,load:staffLoad,wait:wait,
+      demandUnits:demandUnits,units:unitsSold,stockout:stockout,rating:rating,nextWeekTraffic:nextWeekTraffic,
+      unsold:unsold,spoilageLoss:spoilageLoss,sales:sales,wholesale:wholesale,staffCost:staffCost,
+      ads:c.ads,fixed:c.fixedDaily,expenses:expenses,profit:profit,products:products,
+      priceDelta:c.referencePrice?((c.price-c.referencePrice)/c.referencePrice*100):0,
+      trafficDelta:c.baseCustomers?((customers-c.baseCustomers)/c.baseCustomers*100):0
+    };
+  }
+  function setText(id,text){var element=document.getElementById(id);if(element)element.textContent=text;}
+  function pulse(id,key,value){
+    var node=document.getElementById(id);if(!node)return;
+    if(lastOutputs[key]!==undefined&&lastOutputs[key]!==value){
+      node.classList.remove("pulse");void node.offsetWidth;node.classList.add("pulse");
+    }
+    lastOutputs[key]=value;
+  }
+  function updateNode(id,key,value,display){
+    setText(id,display);pulse(id,key,display);
+  }
+  function renderProducts(products){
+    var tbody=document.getElementById("productRows");tbody.innerHTML="";
+    products.forEach(function(item,index){
+      var row=document.createElement("tr");
+      var name=document.createElement("td");name.textContent=item.name;
+      if(index===0){var badge=document.createElement("span");badge.className="seller-badge";badge.textContent="★ BEST SELLER";name.appendChild(badge);}
+      var mix=document.createElement("td");mix.textContent=fmt(item.share,0)+"%";
+      var units=document.createElement("td");units.textContent=fmt(item.units,0);
+      row.append(name,mix,units);tbody.appendChild(row);
+    });
+  }
+  function renderResults(animate){
+    var c=readDraft();draft=c;setStore(KEYS.draft,c);
+    var r=calculate(c);
+    updateNode("outTraffic","traffic",r.customers,fmt(r.customers));
+    updateNode("outPeak","peak",r.peak,fmt(r.peak,1));
+    updateNode("outLoad","load",r.load,fmt(r.load,0));
+    updateNode("outWait","wait",r.wait,fmt(r.wait,1));
+    updateNode("outRating","rating",r.rating,r.rating.toFixed(1));
+    var trafficDirection=r.trafficDelta>0?"+":"";setText("trafficDetail",trafficDirection+fmt(r.trafficDelta,1)+"% vs base customer count.");
+    setText("peakDetail",fmt(c.peakShare,0)+"% in "+fmt(c.peakHours,1)+" hours.");
+    setText("loadDetail",c.staff>0?fmt(r.peak/c.staff,1)+" peak customers per staff / hour.":"No staff on shift.");
+    var loadNode=document.getElementById("nodeLoad");var highLoad=r.load>=c.loadThreshold;loadNode.classList.toggle("pressure",highLoad);loadNode.classList.toggle("alert",r.load>=90);
+    setText("loadStatus",r.load>=90?"Severe modeled load":(highLoad?"Above "+fmt(c.loadThreshold,0)+"% threshold":"Within model threshold"));
+    var waitNode=document.getElementById("nodeWait");waitNode.classList.toggle("pressure",r.wait>=10);waitNode.classList.toggle("alert",r.wait>=15);
+    setText("waitDetail",fmt(c.baseWait,1)+" min base + load × "+fmt(c.waitImpact,2)+".");
+    var ratingNode=document.getElementById("nodeRating");ratingNode.classList.toggle("alert",r.rating<2.5);ratingNode.classList.toggle("pressure",r.stockout&&r.rating>=2.5);
+    setText("ratingDetail",r.stockout?"Wait plus stockout penalty applied.":"Wait-time effect; no stockout penalty.");
+    setText("ratingStatus",r.stockout?"Stockout affects rating":"Feeds next-week traffic");
+    setText("dailyUnits",fmt(r.units));setText("unitsDay",fmt(r.units));setText("unitsWeek",fmt(r.units*7));setText("unitsMonth",fmt(r.units*30));
+    setText("footfallWeek",fmt(r.customers*7));setText("footfallMonth",fmt(r.customers*30));
+    setText("moneyIn",money(r.sales));setText("moneyOut",money(r.expenses));
+    setText("netProfit",money(r.profit));
+    var profitBlock=document.getElementById("profitBlock");profitBlock.classList.toggle("negative",r.profit<0);
+    var profitLabel=document.getElementById("netProfit");profitLabel.classList.toggle("negative",r.profit<0);profitLabel.classList.toggle("positive",r.profit>=0);
+    setText("costWholesale",money(r.wholesale));setText("costStaff",money(r.staffCost));setText("costAds",money(r.ads));setText("costSpoilage",money(r.spoilageLoss));setText("costFixed",money(r.fixed));
+    setText("unitsLimitNote",r.stockout?fmt(r.demandUnits,0)+" units of demand; stock limits sales to "+fmt(r.units)+".":fmt(r.unsold,0)+" units remain in the daily inventory model.");
+    setText("nextWeekTraffic",fmt(r.nextWeekTraffic)+" customers/day");
+    renderProducts(r.products);
+    var shareTotal=c.products.reduce(function(sum,item){return sum+Math.max(0,item.share);},0);
+    setText("mixTotal",shareTotal===0?"All shares are zero; the estimate splits units evenly.":"Shares total "+fmt(shareTotal,0)+"%; the estimate normalizes them to 100%.");
+    return {config:c,result:r};
+  }
+  function showToast(message){
+    var toast=document.getElementById("toast");toast.textContent=message;toast.classList.add("show");
+    clearTimeout(toastTimer);toastTimer=setTimeout(function(){toast.classList.remove("show");},2200);
+  }
+  function formatResultSummary(run){
+    var r=run.result;return run.name+"\n"+fmt(r.customers)+" customers/day | "+fmt(r.units)+" units sold/day\nSales: "+money(r.sales)+" | Expenses: "+money(r.expenses)+"\nNet: "+money(r.profit)+" | Rating: "+r.rating.toFixed(1)+" / 5";
+  }
+  function clipboardText(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){showToast("Summary copied to clipboard.");}).catch(function(){fallbackCopy(text);});
+    }else fallbackCopy(text);
+  }
+  function fallbackCopy(text){
+    var temp=document.createElement("textarea");temp.value=text;temp.style.position="fixed";temp.style.opacity="0";document.body.appendChild(temp);temp.select();
+    try{document.execCommand("copy");showToast("Summary copied to clipboard.");}catch(e){showToast("Copy was blocked by the browser.");}
+    temp.remove();
+  }
+  function readClipboardSetup(){scenarioClipboard=getStore(KEYS.clipboard,null);document.getElementById("pasteSetup").disabled=!scenarioClipboard;}
+  function copySetup(record){
+    scenarioClipboard={name:record.name||"Copied setup",config:copyObject(record.config)};
+    setStore(KEYS.clipboard,scenarioClipboard);readClipboardSetup();
+    var plain=JSON.stringify(scenarioClipboard.config,null,2);clipboardText(plain);
+    showToast("Setup copied. Use Paste setup to load it.");
+  }
+  function pasteSetup(){
+    if(!scenarioClipboard||!scenarioClipboard.config){showToast("Copy a run or saved setup first.");return;}
+    var c=copyObject(scenarioClipboard.config);c.name=(scenarioClipboard.name||"Copied setup")+" copy";
+    applyDraft(c);document.getElementById("workingName").value=c.name;draft=readDraft();setStore(KEYS.draft,draft);
+    window.scrollTo({top:0,behavior:"smooth"});showToast("Setup pasted into the workspace.");
+  }
+  function persistRuns(){setStore(KEYS.runs,recentRuns);}
+  function persistSaved(){setStore(KEYS.saved,savedScenarios);}
+  function runSimulation(){
+    var current=renderResults(false);var name=getText("workingName","Simulation run");
+    var run={id:makeId(),name:name,createdAt:new Date().toISOString(),config:copyObject(current.config),result:copyObject(current.result),savedId:null};
+    recentRuns.unshift(run);recentRuns=recentRuns.slice(0,20);persistRuns();renderRecords();showToast("Simulation added to recent runs. Save it to keep it.");
+  }
+  function openModal(mode,run){
+    pendingRunId=run?run.id:null;document.getElementById("saveModal").hidden=false;
+    document.getElementById("modalTitle").textContent=mode==="rename"?"Rename scenario":"Save scenario";
+    document.getElementById("modalDescription").textContent=mode==="rename"?"Change the name of this saved setup.":"Give this run a name so you can return to it later.";
+    document.getElementById("modalName").value=mode==="rename"?(run.name||""):(run.name||"");
+    document.getElementById("modalNote").value=mode==="rename"?(run.note||""):"";
+    document.getElementById("modalNote").disabled=mode==="rename";
+    document.getElementById("confirmModal").dataset.mode=mode;
+    document.getElementById("modalName").focus();
+  }
+  function closeModal(){document.getElementById("saveModal").hidden=true;pendingRunId=null;}
+  function confirmModal(){
+    var mode=document.getElementById("confirmModal").dataset.mode;
+    var name=getText("modalName","Untitled scenario");
+    if(mode==="rename"){
+      var saved=savedScenarios.find(function(item){return item.id===pendingRunId;});
+      if(saved){saved.name=name;persistSaved();renderRecords();showToast("Scenario renamed.");}
+      closeModal();return;
+    }
+    var run=recentRuns.find(function(item){return item.id===pendingRunId;});
+    if(!run){closeModal();return;}
+    var savedRun={id:makeId(),name:name,note:document.getElementById("modalNote").value.trim(),createdAt:run.createdAt,savedAt:new Date().toISOString(),config:copyObject(run.config),result:copyObject(run.result)};
+    savedScenarios.unshift(savedRun);savedScenarios=savedScenarios.slice(0,100);run.savedId=savedRun.id;
+    persistRuns();persistSaved();renderRecords();closeModal();showToast("Scenario saved.");
+  }
+  function removeRun(id){
+    if(!window.confirm("Delete this recent simulation?"))return;
+    recentRuns=recentRuns.filter(function(run){return run.id!==id;});persistRuns();renderRecords();showToast("Recent simulation deleted.");
+  }
+  function removeSaved(id){
+    if(!window.confirm("Delete this saved scenario? This cannot be undone."))return;
+    savedScenarios=savedScenarios.filter(function(item){return item.id!==id;});persistSaved();renderRecords();showToast("Saved scenario deleted.");
+  }
+  function loadSaved(id){
+    var item=savedScenarios.find(function(scenario){return scenario.id===id;});if(!item)return;
+    var c=copyObject(item.config);c.name=item.name;applyDraft(c);document.getElementById("workingName").value=item.name;
+    draft=readDraft();setStore(KEYS.draft,draft);window.scrollTo({top:0,behavior:"smooth"});showToast("Scenario loaded into the live workspace.");
+  }
+  function addAction(container,label,className,handler){
+    var button=document.createElement("button");button.type="button";button.className="btn "+(className||"");button.textContent=label;button.addEventListener("click",handler);container.appendChild(button);return button;
+  }
+  function renderRecords(){
+    var recent=document.getElementById("recentList");recent.innerHTML="";
+    document.getElementById("recentCount").textContent=recentRuns.length+" "+(recentRuns.length===1?"run":"runs");
+    if(!recentRuns.length)recent.innerHTML='<div class="empty-state">No runs yet. Adjust a lever and select <strong>Run simulation</strong>.</div>';
+    recentRuns.forEach(function(run){
+      var card=document.createElement("article");card.className="record";
+      var main=document.createElement("div");main.className="record-main";
+      var title=document.createElement("div");title.className="record-title";title.textContent=run.name||"Simulation";
+      if(run.savedId){var badge=document.createElement("span");badge.className="save-badge";badge.textContent="SAVED";title.appendChild(badge);}
+      var date=document.createElement("div");date.className="record-meta";date.textContent=shortTime(run.createdAt)+" · "+fmt(run.result.customers)+" customers/day · "+money(run.result.profit)+" net/day";
+      main.append(title);card.append(main,date);
+      var actions=document.createElement("div");actions.className="record-actions";
+      if(!run.savedId)addAction(actions,"Save","soft",function(){openModal("save",run);});
+      addAction(actions,"Copy setup","",function(){copySetup(run);});
+      addAction(actions,"Copy results","",function(){clipboardText(formatResultSummary(run));});
+      addAction(actions,"Delete","danger",function(){removeRun(run.id);});
+      card.appendChild(actions);recent.appendChild(card);
+    });
+    var saved=document.getElementById("savedList");saved.innerHTML="";
+    document.getElementById("savedCount").textContent=savedScenarios.length+" saved";
+    if(!savedScenarios.length)saved.innerHTML='<div class="empty-state">Save a run to build your scenario library.</div>';
+    savedScenarios.forEach(function(item){
+      var card=document.createElement("article");card.className="record";
+      var title=document.createElement("div");title.className="record-title";title.textContent=item.name||"Saved scenario";
+      var meta=document.createElement("div");meta.className="record-meta";meta.textContent=shortTime(item.savedAt)+" · "+fmt(item.result.customers)+" customers/day · "+fmt(item.units||item.result.units)+" units/day · "+money(item.result.profit)+" net/day";
+      card.append(title,meta);
+      if(item.note){var note=document.createElement("div");note.className="record-meta";note.textContent="Note: "+item.note;card.appendChild(note);}
+      var actions=document.createElement("div");actions.className="record-actions";
+      addAction(actions,"Load","soft",function(){loadSaved(item.id);});
+      addAction(actions,"Copy setup","",function(){copySetup(item);});
+      addAction(actions,"Rename","",function(){openModal("rename",item);});
+      addAction(actions,"Delete","danger",function(){removeSaved(item.id);});
+      card.appendChild(actions);saved.appendChild(card);
+    });
+  }
+  function updateBusinessPreset(){
+    var type=document.getElementById("businessType").value;var rate=type==="retail"?5:30;
+    document.getElementById("spoilageRate").value=rate;
+    if(type==="retail"){
+      document.getElementById("product1Name").value="Staples";
+      document.getElementById("product2Name").value="Snacks";
+      document.getElementById("product3Name").value="Household";
+    }else{
+      document.getElementById("product1Name").value="Masala chai";
+      document.getElementById("product2Name").value="Coffee";
+      document.getElementById("product3Name").value="Snack";
+    }
+    renderResults(false);
+  }
+  bindings.forEach(function(row){
+    var range=document.getElementById(row[0]);var numeric=document.getElementById(row[1]);
+    range.addEventListener("input",function(){numeric.value=range.value;renderResults(true);});
+    numeric.addEventListener("input",function(){
+      var value=safeNumber(numeric.value,defaults[row[2]],0,1000000);
+      if(value>=Number(range.min)&&value<=Number(range.max))range.value=value;
+      renderResults(true);
+    });
+  });
+  document.querySelectorAll(".model-input").forEach(function(input){input.addEventListener("input",function(){renderResults(true);});});
+  ["wageInput","product1Name","product2Name","product3Name"].forEach(function(id){document.getElementById(id).addEventListener("input",function(){renderResults(true);});});
+  document.getElementById("businessType").addEventListener("change",updateBusinessPreset);
+  document.getElementById("workingName").addEventListener("input",function(){draft=readDraft();setStore(KEYS.draft,draft);});
+  document.getElementById("runSimulation").addEventListener("click",runSimulation);
+  document.getElementById("pasteSetup").addEventListener("click",pasteSetup);
+  document.getElementById("resetSetup").addEventListener("click",function(){
+    if(!window.confirm("Reset the current inputs to the starter settings? Saved scenarios and recent runs will stay."))return;
+    applyDraft(copyObject(defaults));setStore(KEYS.draft,readDraft());showToast("Inputs reset. Saved runs were kept.");
+  });
+  document.getElementById("cancelModal").addEventListener("click",closeModal);
+  document.getElementById("confirmModal").addEventListener("click",confirmModal);
+  document.getElementById("saveModal").addEventListener("click",function(event){if(event.target===this)closeModal();});
+  document.addEventListener("keydown",function(event){if(event.key==="Escape"&&!document.getElementById("saveModal").hidden)closeModal();});
+  applyDraft(draft);renderRecords();readClipboardSetup();
+})();
+</script>
+</body>
+</html>
