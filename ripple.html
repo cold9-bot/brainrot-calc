@@ -723,7 +723,7 @@ footer a{color:#618276;text-decoration:none}
       var date=document.createElement("div");date.className="record-meta";date.textContent=shortTime(run.createdAt)+" · "+fmt(run.result.customers)+" customers/day · "+money(run.result.profit)+" net/day";
       main.append(title);card.append(main,date);
       var actions=document.createElement("div");actions.className="record-actions";
-      if(!run.savedId)addAction(actions,"Save","soft",function(){openModal("save",run);});
+      addAction(actions,run.savedId?"Save copy":"Save","soft",function(){openModal("save",run);});
       addAction(actions,"Edit setup","",function(){editRun(run.id);});
       addAction(actions,"Copy setup","",function(){copySetup(run);});
       addAction(actions,"Copy results","",function(){clipboardText(formatResultSummary(run));});
