@@ -60,13 +60,26 @@ input:focus,select:focus,textarea:focus{border-color:#6bb4a0;box-shadow:0 0 0 3p
 .range-value{display:grid;grid-template-columns:1fr 68px;gap:7px;align-items:center}
 input[type=range]{width:100%;accent-color:var(--teal);height:15px;margin:0}
 .range-value input{width:100%;height:29px;padding:5px 6px;text-align:right;font:10px ui-monospace,SFMono-Regular,Menlo,monospace}
+.input-with-unit{display:grid;grid-template-columns:15px 1fr;align-items:center;gap:3px}
+.input-with-unit span{font-size:9px;color:#72827c;text-align:center}
 .lever-unit{position:absolute;right:18px;bottom:16px;font-size:8px;color:#8a9792;pointer-events:none}
 .lever-dual{display:grid;grid-template-columns:1fr;gap:6px;margin-top:7px}
 .compact-field{display:flex;justify-content:space-between;align-items:center;gap:5px;font-size:8px;color:var(--muted)}
 .compact-field input{width:78px;height:25px;font:9px ui-monospace,SFMono-Regular,Menlo,monospace;text-align:right;padding:4px 5px}
 .compact-field span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.staff-total{font-size:8px;color:#55736a;margin-top:6px;font-weight:750}
 .flow-callout{margin:12px 0 14px;padding:9px 11px;border-radius:9px;background:#f6f8f4;border:1px dashed #d6e1d9;color:#62736d;font-size:9px;line-height:1.5}
 .flow-callout strong{color:#3e655b}
+.influence-routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:10px 0 14px}
+.influence-route{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:7px 8px;background:#f8faf7;border:1px solid #e6ece6;border-radius:8px;font-size:8px;color:#71807d;line-height:1.35}
+.influence-route b{color:#385a50}
+.influence-route .route-arrow{color:var(--teal);font-size:12px;font-weight:800}
+.example-callout{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0;padding:9px 11px;border:1px solid #efdfbd;border-radius:9px;background:#fffbf1;color:#72603f;font-size:8px;line-height:1.45}
+.example-callout strong{color:#805d20}
+.formula-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}
+.formula-line{padding:8px;border:1px solid #e8ece7;border-radius:8px;background:white;font-size:8px;line-height:1.5;color:#66756f}
+.formula-line strong{display:block;margin-bottom:3px;color:#38584e;font-size:8px}
+.formula-line code{font:8px ui-monospace,SFMono-Regular,Menlo,monospace;color:#496a5f;overflow-wrap:anywhere}
 .chain-wrap{overflow-x:auto;padding:2px 0 8px;scrollbar-color:#bfd5ca transparent;scrollbar-width:thin}
 .chain{display:flex;align-items:stretch;min-width:700px;gap:0}
 .flow-node{flex:1;min-width:122px;border:1px solid #dfe7e1;border-radius:11px;background:#fff;padding:10px 9px;position:relative;overflow:hidden;transition:box-shadow .25s,border-color .25s}
@@ -129,6 +142,12 @@ input[type=range]{width:100%;accent-color:var(--teal);height:15px;margin:0}
 .profit-block{margin-top:10px;padding:11px;border:1px solid #dce8e0;border-radius:10px;background:linear-gradient(130deg,#edf7f1,#fff)}
 .profit-block.negative{background:#fff3f0;border-color:#f3d0c8}
 .profit-block .kpi-major{font-size:21px;margin:5px 0 2px}
+.projection-grid{display:grid;grid-template-columns:1.1fr repeat(3,1fr);gap:1px;margin-top:9px;border:1px solid #e7ece7;border-radius:8px;overflow:hidden;background:#e7ece7}
+.projection-grid>div{background:#fff;padding:6px 5px;font-size:7px;color:#66756f}
+.projection-grid>div:not(:first-child){text-align:right;font:700 8px ui-monospace,SFMono-Regular,Menlo,monospace;color:#405c52}
+.projection-grid .projection-head{background:#f5f8f5;font-size:6px;text-transform:uppercase;letter-spacing:.04em;color:#84928c}
+.projection-grid .projection-row-label{font-weight:800;color:#53675f}
+.projection-note{font-size:7px;color:var(--muted);margin-top:5px;line-height:1.4}
 .cost-list{margin:8px 0 0;padding:0;list-style:none}
 .cost-list li{display:flex;justify-content:space-between;gap:8px;font-size:8px;color:var(--muted);padding:4px 0;border-top:1px solid #e6ece7}
 .cost-list strong{font:700 8px ui-monospace,SFMono-Regular,Menlo,monospace;color:#495b54}
@@ -143,6 +162,7 @@ input[type=range]{width:100%;accent-color:var(--teal);height:15px;margin:0}
 .seller-badge{display:inline-block;background:var(--gold-soft);color:#8c6426;padding:3px 5px;border-radius:999px;font-size:6px;font-weight:900;letter-spacing:.02em;margin-left:4px;white-space:nowrap}
 .loop-note{margin-top:11px;padding:9px;background:#f2f7f4;border-radius:8px;font-size:8px;line-height:1.5;color:#597169}
 .loop-note strong{color:#2f6d5b}
+.loop-note .btn{display:block;margin-top:7px;font-size:8px;padding:6px 8px}
 .records{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:15px}
 .record-panel{padding:16px;min-width:0}
 .record-head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:10px}
@@ -173,7 +193,7 @@ footer a{color:#618276;text-decoration:none}
 .modal-actions{display:flex;justify-content:end;gap:7px;margin-top:13px}
 @media(max-width:1120px){.workspace{grid-template-columns:minmax(0,1.4fr) minmax(285px,.85fr)}.lever-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.assumption-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.workspace{grid-template-columns:1fr}.scoreboard{position:static}.hero{align-items:start;flex-direction:column}.hero-tag{text-align:left;display:flex;gap:12px}.records{grid-template-columns:1fr 1fr}}
-@media(max-width:620px){main{width:calc(100% - 22px);padding-top:23px}.topbar{height:59px;padding:0 12px}.top-chip{display:none}.toolbar{align-items:stretch;flex-wrap:wrap}.toolbar-field.name-field{flex-basis:100%}.toolbar-field{flex:1;min-width:120px}.toolbar .btn{flex:1}.canvas,.scoreboard,.record-panel{padding:13px}.lever-grid{grid-template-columns:1fr 1fr}.chain{min-width:700px}.assumption-grid{grid-template-columns:1fr 1fr}.records{grid-template-columns:1fr}.hero p{font-size:11px}.hero-tag{display:none}.product-table th,.product-table td{font-size:7px}}
+@media(max-width:620px){main{width:calc(100% - 22px);padding-top:23px}.topbar{height:59px;padding:0 12px}.top-chip{display:none}.toolbar{align-items:stretch;flex-wrap:wrap}.toolbar-field.name-field{flex-basis:100%}.toolbar-field{flex:1;min-width:120px}.toolbar .btn{flex:1}.canvas,.scoreboard,.record-panel{padding:13px}.lever-grid{grid-template-columns:1fr 1fr}.chain{min-width:700px}.assumption-grid{grid-template-columns:1fr 1fr}.formula-list{grid-template-columns:1fr}.influence-routes{grid-template-columns:1fr}.records{grid-template-columns:1fr}.hero p{font-size:11px}.hero-tag{display:none}.product-table th,.product-table td{font-size:7px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 </style>
 </head>
@@ -201,6 +221,7 @@ footer a{color:#618276;text-decoration:none}
     </div>
     <button class="btn" id="pasteSetup" type="button" disabled>Paste setup</button>
     <button class="btn" id="resetSetup" type="button">Reset levers</button>
+    <button class="btn soft" id="tryExample" type="button">Try 20% price cut</button>
     <button class="btn primary" id="runSimulation" type="button">Run simulation →</button>
   </section>
 
@@ -215,19 +236,20 @@ footer a{color:#618276;text-decoration:none}
       <div class="lever-grid">
         <article class="lever-card" data-node="price">
           <div class="lever-top"><span class="lever-index">NODE 01</span><span class="lever-type">LEVER</span></div>
-          <h3>Average item price</h3><p>Daily selling price per item</p>
-          <div class="range-value"><input id="priceRange" type="range" min="0" max="500" step="5" value="150" aria-label="Average item price slider"><input id="priceInput" type="number" min="0" max="100000" step="5" value="150" aria-label="Average item price in rupees"></div>
+          <h3>Average item price</h3><p>Daily selling price · ₹ per item</p>
+          <div class="range-value"><input id="priceRange" type="range" min="0" max="500" step="5" value="150" aria-label="Average item price slider"><label class="input-with-unit"><span>₹</span><input id="priceInput" type="number" min="0" max="100000" step="5" value="150" aria-label="Average item price in rupees"></label></div>
         </article>
         <article class="lever-card" data-node="ads">
           <div class="lever-top"><span class="lever-index">NODE 02</span><span class="lever-type">LEVER</span></div>
-          <h3>Ad / promo spend</h3><p>Instagram, delivery apps, flyers</p>
-          <div class="range-value"><input id="adsRange" type="range" min="0" max="5000" step="50" value="500" aria-label="Daily marketing spend slider"><input id="adsInput" type="number" min="0" max="1000000" step="50" value="500" aria-label="Daily marketing spend in rupees"></div>
+          <h3>Ad / promo spend</h3><p>Instagram, delivery apps, flyers · ₹ per day</p>
+          <div class="range-value"><input id="adsRange" type="range" min="0" max="5000" step="50" value="500" aria-label="Daily marketing spend slider"><label class="input-with-unit"><span>₹</span><input id="adsInput" type="number" min="0" max="1000000" step="50" value="500" aria-label="Daily marketing spend in rupees"></label></div>
         </article>
         <article class="lever-card" data-node="staff">
           <div class="lever-top"><span class="lever-index">NODE 03</span><span class="lever-type">LEVER</span></div>
           <h3>Staff on shift</h3><p>Count and daily wage</p>
           <div class="range-value"><input id="staffRange" type="range" min="0" max="15" step="1" value="3" aria-label="Number of staff slider"><input id="staffInput" type="number" min="0" max="100" step="1" value="3" aria-label="Number of staff"></div>
-          <label class="compact-field lever-dual"><span>Wage per person / day</span><input id="wageInput" type="number" min="0" max="100000" step="50" value="600" aria-label="Daily wage per staff member in rupees"></label>
+          <label class="compact-field lever-dual"><span>Wage per person / day (₹)</span><input id="wageInput" type="number" min="0" max="100000" step="50" value="600" aria-label="Daily wage per staff member in rupees"></label>
+          <div class="staff-total" id="staffTotal">Daily wages: ₹1,800</div>
         </article>
         <article class="lever-card" data-node="inventory">
           <div class="lever-top"><span class="lever-index">NODE 04</span><span class="lever-type">LEVER</span></div>
@@ -236,7 +258,15 @@ footer a{color:#618276;text-decoration:none}
         </article>
       </div>
 
-      <div class="flow-callout"><strong>How the levers feed the chain:</strong> price, ads, and your previous rating shape traffic. Traffic creates the peak rush; peak load is shared across staff. Wait time and stockouts shape the next rating.</div>
+      <div class="flow-callout"><strong>How the levers feed the chain:</strong> price, ads, and the previous review shape traffic; traffic creates the peak rush; staff count shapes load; wait time and stockouts shape the next rating. Inventory also caps units sold and affects spoilage. Wages, ads, wholesale cost, and fixed costs feed the scoreboard.</div>
+      <div class="influence-routes" aria-label="Cause and effect connections">
+        <div class="influence-route"><b>01 Price</b> + <b>02 Ads</b> + previous rating <span class="route-arrow">→</span><b>05 Customer traffic</b></div>
+        <div class="influence-route"><b>05 Traffic</b> + peak share <span class="route-arrow">→</span><b>06 Peak rush</b> <span class="route-arrow">→</span><b>07 Staff load</b></div>
+        <div class="influence-route"><b>03 Staff count</b> <span class="route-arrow">→</span><b>07 Load</b> · <b>04 Inventory</b> <span class="route-arrow">→</span><b>Sales cap + stockout + spoilage</b></div>
+        <div class="influence-route"><b>08 Wait</b> + stockout <span class="route-arrow">→</span><b>09 Rating</b> <span class="route-arrow">→</span><b>Next-week traffic</b></div>
+        <div class="influence-route"><b>Units × price</b> <span class="route-arrow">→</span><b>Sales</b> · wages + ads + stock + fixed costs <span class="route-arrow">→</span><b>Net</b></div>
+      </div>
+      <div class="example-callout"><span><strong>Price-cut example:</strong> With the starter values, ₹150 → ₹120 raises traffic 30%, pushes staff load to about 86%, and wait to about 16 minutes. Stock caps sales at 200 units; sales move from ₹25,350 to ₹24,000 and net changes from ₹2,237 profit to ₹1,500 loss. The written rating formula gives about 1.8★ after the 0.8★ stockout penalty; the prompt's 3.1★ figure conflicts with that formula.</span></div>
 
       <div class="section-kicker">05-09 · Cause-and-effect chain</div>
       <div class="chain-wrap" aria-label="Scrollable workflow">
@@ -286,8 +316,8 @@ footer a{color:#618276;text-decoration:none}
             <label>Reference item price (₹)<input class="model-input" id="referencePrice" type="number" min="1" step="5" value="150"></label>
             <label>Reference ad spend / day (₹)<input class="model-input" id="referenceAds" type="number" min="0" step="50" value="500"></label>
             <label>Previous review score<input class="model-input" id="previousRating" type="number" min="1" max="5" step="0.1" value="4.5"></label>
-            <label>Avg items / order<input class="model-input" id="itemsPerOrder" type="number" min="0" step="0.1" value="1.4"></label>
-            <label>Wholesale cost / item (₹)<input class="model-input" id="wholesaleCost" type="number" min="0" step="1" value="60"></label>
+            <label>Avg items / order<input class="model-input" id="itemsPerOrder" type="number" min="0" step="0.1" value="1.5"></label>
+            <label>Wholesale cost / item (₹)<input class="model-input" id="wholesaleCost" type="number" min="0" step="1" value="110"></label>
             <label>Fixed rent + utilities / day (₹)<input class="model-input" id="fixedDaily" type="number" min="0" step="50" value="1200"></label>
             <label>Spoilage / dead stock (%)<input class="model-input" id="spoilageRate" type="number" min="0" max="100" step="1" value="30"></label>
           </div>
@@ -312,7 +342,17 @@ footer a{color:#618276;text-decoration:none}
               <label>High-load threshold (%)<input class="model-input" id="loadThreshold" type="number" min="0" max="100" step="1" value="70"></label>
             </div>
           </div>
-          <p class="formula-note">Traffic = base customers × (1 - price sensitivity × price change) × (1 + ad response × ad change) × (previous rating ÷ 4). Stress/load = peak customers per hour ÷ staff × load multiplier, capped at 100%. Wait = base wait + load × wait impact. Rating = 5 - (wait × wait impact) - stockout penalty, clamped from 1 to 5. Values are scenario assumptions, not measured Bengaluru market data.</p>
+          <div class="formula-list" aria-label="Full model formulas">
+            <div class="formula-line"><strong>1 · Customer traffic / day</strong><code>Base customers × (1 − price sensitivity × price change) × (1 + ad response × ad change) × (previous rating ÷ 4)</code><br>Price and ad changes are relative to their reference values. Defaults: sensitivity 1.5 and ad response 0.4. A 10% price increase at 1.5 sensitivity reduces the price factor by 15%.</div>
+            <div class="formula-line"><strong>2 · Peak rush / hour</strong><code>(customers / day × peak share) ÷ peak-window hours</code><br>Default: 55% of daily traffic across 2.5 hours.</div>
+            <div class="formula-line"><strong>3 · Staff stress / load</strong><code>min(100%, (peak customers / hour ÷ staff count) × load multiplier)</code><br>Above the selected threshold (70% by default) is marked as burnout risk. With zero staff, the model uses 100% load. Staff pay is included in costs; the supplied stress equation does not specify a separate morale effect.</div>
+            <div class="formula-line"><strong>4 · Service wait</strong><code>base wait (3 min) + stress percentage × 0.15</code></div>
+            <div class="formula-line"><strong>5 · Units, stockout, and rating</strong><code>Demand = customers × avg items/order; whole units sold = floor(min(demand, inventory))</code><br><code>Stockout = demand &gt; inventory; rating = clamp(1, 5, 5 − wait × 0.15 − (0.8 if stockout))</code></div>
+            <div class="formula-line"><strong>6 · Spoilage / dead stock</strong><code>max(0, inventory − units sold) × wholesale cost × spoilage rate</code><br>Default spoilage: 30% cafe, 5% retail.</div>
+            <div class="formula-line"><strong>7 · Sales, expenses, and net</strong><code>Sales = units sold × price (UPI + cash + card)</code><br><code>Costs = wholesale + staff wages + ads + spoilage + rent/utilities</code><br><code>Net profit/loss = sales − costs</code></div>
+            <div class="formula-line"><strong>8 · Next week and projections</strong><code>This rating replaces the previous review score for next-week traffic.</code><br><code>Weekly = daily × 7; monthly = daily × 30</code> (same daily assumptions repeated).</div>
+          </div>
+          <p class="formula-note">All multipliers and business figures are editable assumptions, not measured Bengaluru market data. The example description contains conflicting traffic/rating outputs; the calculations use the formulas shown above.</p>
           <p class="formula-note">This daily model repeats the same day for 7-day and 30-day totals. It does not model weekends, taxes, delivery-app commissions, payment mix, or product-specific prices and stock. The product table allocates total sold units by your estimated sales mix. Use it to explore relationships, not as a business forecast.</p>
         </div>
       </details>
@@ -330,13 +370,20 @@ footer a{color:#618276;text-decoration:none}
         <div class="flow-stat"><span>Footfall · 30 days</span><strong id="footfallMonth">3,375</strong></div>
       </div>
       <div class="flow-stats">
-        <div class="flow-stat"><span>Money in · sales</span><strong id="moneyIn">₹23,700</strong></div>
-        <div class="flow-stat"><span>Money out · costs</span><strong id="moneyOut">₹13,?00</strong></div>
+        <div class="flow-stat"><span>Money in · day sales</span><strong id="moneyIn">₹23,700</strong></div>
+        <div class="flow-stat"><span>Money out · day costs</span><strong id="moneyOut">₹13,?00</strong></div>
       </div>
       <div class="profit-block" id="profitBlock">
         <div class="kpi-label">Net profit / loss · per day</div><div class="kpi-major" id="netProfit">₹0</div>
-        <div class="kpi-sub">Sales minus modeled daily expenses.</div>
+        <div class="kpi-sub">Combined UPI, cash, and card sales minus modeled expenses.</div>
       </div>
+      <div class="projection-grid" aria-label="Repeated daily scenario projections">
+        <div class="projection-head">Estimate</div><div class="projection-head">Day</div><div class="projection-head">7 days</div><div class="projection-head">30 days</div>
+        <div class="projection-row-label">Sales</div><div id="salesDayProjection">₹0</div><div id="salesWeekProjection">₹0</div><div id="salesMonthProjection">₹0</div>
+        <div class="projection-row-label">Costs</div><div id="costDayProjection">₹0</div><div id="costWeekProjection">₹0</div><div id="costMonthProjection">₹0</div>
+        <div class="projection-row-label">Net</div><div id="netDayProjection">₹0</div><div id="netWeekProjection">₹0</div><div id="netMonthProjection">₹0</div>
+      </div>
+      <div class="projection-note">Week and month repeat today's assumptions (×7 / ×30); weekends and seasonality are not modeled.</div>
       <ul class="cost-list" aria-label="Daily expense breakdown">
         <li><span>Wholesale cost</span><strong id="costWholesale">₹0</strong></li>
         <li><span>Staff wages</span><strong id="costStaff">₹0</strong></li>
@@ -348,7 +395,7 @@ footer a{color:#618276;text-decoration:none}
         <div class="best-head"><strong>Best-selling products</strong><span>Estimated units / day</span></div>
         <table class="product-table"><thead><tr><th>Product</th><th>Mix</th><th>Units</th></tr></thead><tbody id="productRows"></tbody></table>
       </div>
-      <div class="loop-note"><strong>Next-week loop:</strong> this run's rating becomes the review input for the next-week traffic estimate: <b id="nextWeekTraffic">77 customers/day</b>.</div>
+      <div class="loop-note"><strong>Next-week loop:</strong> this run's <b id="nextRatingValue">3.1★</b> becomes the review input and estimates <b id="nextWeekTraffic">77 customers/day</b>. <button class="btn soft" id="applyNextWeek" type="button">Use this rating for next week</button></div>
     </aside>
   </section>
 
@@ -381,8 +428,8 @@ footer a{color:#618276;text-decoration:none}
   var KEYS={draft:"ripplemap.draft.v1",runs:"ripplemap.runs.v1",saved:"ripplemap.saved.v1",clipboard:"ripplemap.clipboard.v1"};
   var defaults={
     businessType:"cafe",price:150,ads:500,staff:3,wage:600,inventory:200,
-    baseCustomers:100,referencePrice:150,referenceAds:500,previousRating:4.5,itemsPerOrder:1.4,
-    wholesaleCost:60,fixedDaily:1200,spoilageRate:30,priceElasticity:1.5,adResponse:0.4,
+    baseCustomers:100,referencePrice:150,referenceAds:500,previousRating:4.5,itemsPerOrder:1.5,
+    wholesaleCost:110,fixedDaily:1200,spoilageRate:30,priceElasticity:1.5,adResponse:0.4,
     peakShare:55,peakHours:2.5,loadMultiplier:8,baseWait:3,waitImpact:0.15,stockoutPenalty:0.8,loadThreshold:70,
     products:[{name:"Masala chai",share:50},{name:"Coffee",share:30},{name:"Snack",share:20}]
   };
@@ -442,7 +489,10 @@ footer a{color:#618276;text-decoration:none}
   }
   function readDraft(){
     var c={businessType:document.getElementById("businessType").value,name:getText("workingName","Untitled setup")};
-    bindings.forEach(function(row){c[row[2]]=safeNumber(document.getElementById(row[1]).value,defaults[row[2]],row[2]==="staff"?0:0,1000000);});
+    bindings.forEach(function(row){
+      var value=safeNumber(document.getElementById(row[1]).value,defaults[row[2]],0,1000000);
+      c[row[2]]=(row[2]==="staff"||row[2]==="inventory")?Math.round(value):value;
+    });
     c.wage=safeNumber(document.getElementById("wageInput").value,defaults.wage,0,1000000);
     modelFields.forEach(function(row){
       if(row[1].indexOf("product")===0)return;
@@ -475,7 +525,7 @@ footer a{color:#618276;text-decoration:none}
     var wait=c.baseWait+(staffLoad*c.waitImpact);
     var demandUnits=customers*c.itemsPerOrder;
     var stockout=demandUnits>c.inventory;
-    var unitsSold=Math.min(Math.max(0,Math.round(demandUnits)),Math.max(0,Math.floor(c.inventory)));
+    var unitsSold=Math.max(0,Math.floor(Math.min(demandUnits,Math.max(0,Math.floor(c.inventory)))));
     var rating=Math.min(5,Math.max(1,5-(wait*c.waitImpact)-(stockout?c.stockoutPenalty:0)));
     var nextWeekTraffic=Math.round(calcTraffic(c,rating));
     var unsold=Math.max(0,c.inventory-unitsSold);
@@ -500,7 +550,7 @@ footer a{color:#618276;text-decoration:none}
       unsold:unsold,spoilageLoss:spoilageLoss,sales:sales,wholesale:wholesale,staffCost:staffCost,
       ads:c.ads,fixed:c.fixedDaily,expenses:expenses,profit:profit,products:products,
       priceDelta:c.referencePrice?((c.price-c.referencePrice)/c.referencePrice*100):0,
-      trafficDelta:c.baseCustomers?((customers-c.baseCustomers)/c.baseCustomers*100):0
+      trafficDelta:(c.baseCustomers*(Math.max(0,c.previousRating/4)))>0?((rawTraffic-(c.baseCustomers*Math.max(0,c.previousRating/4)))/(c.baseCustomers*Math.max(0,c.previousRating/4))*100):0
     };
   }
   function setText(id,text){var element=document.getElementById(id);if(element)element.textContent=text;}
@@ -533,15 +583,15 @@ footer a{color:#618276;text-decoration:none}
     updateNode("outLoad","load",r.load,fmt(r.load,0));
     updateNode("outWait","wait",r.wait,fmt(r.wait,1));
     updateNode("outRating","rating",r.rating,r.rating.toFixed(1));
-    var trafficDirection=r.trafficDelta>0?"+":"";setText("trafficDetail",trafficDirection+fmt(r.trafficDelta,1)+"% vs base customer count.");
+    var trafficDirection=r.trafficDelta>0?"+":"";setText("trafficDetail",trafficDirection+fmt(r.trafficDelta,1)+"% vs reference price/ad at this review score.");
     setText("peakDetail",fmt(c.peakShare,0)+"% in "+fmt(c.peakHours,1)+" hours.");
     setText("loadDetail",c.staff>0?fmt(r.peak/c.staff,1)+" peak customers per staff / hour.":"No staff on shift.");
-    var loadNode=document.getElementById("nodeLoad");var highLoad=r.load>=c.loadThreshold;loadNode.classList.toggle("pressure",highLoad);loadNode.classList.toggle("alert",r.load>=90);
-    setText("loadStatus",r.load>=90?"Severe modeled load":(highLoad?"Above "+fmt(c.loadThreshold,0)+"% threshold":"Within model threshold"));
+    var loadNode=document.getElementById("nodeLoad");var highLoad=r.load>c.loadThreshold;loadNode.classList.toggle("pressure",highLoad);loadNode.classList.toggle("alert",r.load>=90);
+    setText("loadStatus",r.load>=90?"Severe load · burnout risk":(highLoad?"Burnout risk above "+fmt(c.loadThreshold,0)+"%":"Within model threshold"));
     var waitNode=document.getElementById("nodeWait");waitNode.classList.toggle("pressure",r.wait>=10);waitNode.classList.toggle("alert",r.wait>=15);
     setText("waitDetail",fmt(c.baseWait,1)+" min base + load × "+fmt(c.waitImpact,2)+".");
     var ratingNode=document.getElementById("nodeRating");ratingNode.classList.toggle("alert",r.rating<2.5);ratingNode.classList.toggle("pressure",r.stockout&&r.rating>=2.5);
-    setText("ratingDetail",r.stockout?"Wait plus stockout penalty applied.":"Wait-time effect; no stockout penalty.");
+    setText("ratingDetail",r.stockout?"Demand "+fmt(r.demandUnits,0)+" > "+fmt(c.inventory,0)+" stock; −"+fmt(c.stockoutPenalty,1)+"★ penalty.":"Wait-time effect; no stockout penalty.");
     setText("ratingStatus",r.stockout?"Stockout affects rating":"Feeds next-week traffic");
     setText("dailyUnits",fmt(r.units));setText("unitsDay",fmt(r.units));setText("unitsWeek",fmt(r.units*7));setText("unitsMonth",fmt(r.units*30));
     setText("footfallWeek",fmt(r.customers*7));setText("footfallMonth",fmt(r.customers*30));
@@ -549,9 +599,14 @@ footer a{color:#618276;text-decoration:none}
     setText("netProfit",money(r.profit));
     var profitBlock=document.getElementById("profitBlock");profitBlock.classList.toggle("negative",r.profit<0);
     var profitLabel=document.getElementById("netProfit");profitLabel.classList.toggle("negative",r.profit<0);profitLabel.classList.toggle("positive",r.profit>=0);
+    setText("salesDayProjection",money(r.sales));setText("salesWeekProjection",money(r.sales*7));setText("salesMonthProjection",money(r.sales*30));
+    setText("costDayProjection",money(r.expenses));setText("costWeekProjection",money(r.expenses*7));setText("costMonthProjection",money(r.expenses*30));
+    setText("netDayProjection",money(r.profit));setText("netWeekProjection",money(r.profit*7));setText("netMonthProjection",money(r.profit*30));
     setText("costWholesale",money(r.wholesale));setText("costStaff",money(r.staffCost));setText("costAds",money(r.ads));setText("costSpoilage",money(r.spoilageLoss));setText("costFixed",money(r.fixed));
     setText("unitsLimitNote",r.stockout?fmt(r.demandUnits,0)+" units of demand; stock limits sales to "+fmt(r.units)+".":fmt(r.unsold,0)+" units remain in the daily inventory model.");
     setText("nextWeekTraffic",fmt(r.nextWeekTraffic)+" customers/day");
+    setText("nextRatingValue",r.rating.toFixed(1)+"★");
+    setText("staffTotal","Daily wages: "+money(r.staffCost)+" ("+fmt(c.staff)+" × "+money(c.wage)+")");
     renderProducts(r.products);
     var shareTotal=c.products.reduce(function(sum,item){return sum+Math.max(0,item.share);},0);
     setText("mixTotal",shareTotal===0?"All shares are zero; the estimate splits units evenly.":"Shares total "+fmt(shareTotal,0)+"%; the estimate normalizes them to 100%.");
@@ -586,6 +641,22 @@ footer a{color:#618276;text-decoration:none}
     var c=copyObject(scenarioClipboard.config);c.name=(scenarioClipboard.name||"Copied setup")+" copy";
     applyDraft(c);document.getElementById("workingName").value=c.name;draft=readDraft();setStore(KEYS.draft,draft);
     window.scrollTo({top:0,behavior:"smooth"});showToast("Setup pasted into the workspace.");
+  }
+  function editRun(id){
+    var run=recentRuns.find(function(item){return item.id===id;});if(!run)return;
+    var c=copyObject(run.config);c.name=run.name||"Edited setup";applyDraft(c);
+    document.getElementById("workingName").value=c.name;draft=readDraft();setStore(KEYS.draft,draft);
+    window.scrollTo({top:0,behavior:"smooth"});showToast("Run loaded for editing. Run it again to save a new result.");
+  }
+  function loadPriceCutExample(){
+    var c=copyObject(defaults);c.name="20% price cut example";c.price=c.referencePrice*0.8;
+    applyDraft(c);document.getElementById("workingName").value=c.name;
+    draft=readDraft();setStore(KEYS.draft,draft);renderResults(true);
+    window.scrollTo({top:0,behavior:"smooth"});showToast("Loaded the 20% price cut against the default business setup.");
+  }
+  function applyNextWeekRating(){
+    var current=calculate(readDraft());document.getElementById("previousRating").value=String(current.rating);
+    renderResults(true);showToast("This rating is now the previous review score for the next-week setup.");
   }
   function persistRuns(){setStore(KEYS.runs,recentRuns);}
   function persistSaved(){setStore(KEYS.saved,savedScenarios);}
@@ -648,6 +719,7 @@ footer a{color:#618276;text-decoration:none}
       main.append(title);card.append(main,date);
       var actions=document.createElement("div");actions.className="record-actions";
       if(!run.savedId)addAction(actions,"Save","soft",function(){openModal("save",run);});
+      addAction(actions,"Edit setup","",function(){editRun(run.id);});
       addAction(actions,"Copy setup","",function(){copySetup(run);});
       addAction(actions,"Copy results","",function(){clipboardText(formatResultSummary(run));});
       addAction(actions,"Delete","danger",function(){removeRun(run.id);});
@@ -663,7 +735,7 @@ footer a{color:#618276;text-decoration:none}
       card.append(title,meta);
       if(item.note){var note=document.createElement("div");note.className="record-meta";note.textContent="Note: "+item.note;card.appendChild(note);}
       var actions=document.createElement("div");actions.className="record-actions";
-      addAction(actions,"Load","soft",function(){loadSaved(item.id);});
+      addAction(actions,"Edit setup","soft",function(){loadSaved(item.id);});
       addAction(actions,"Copy setup","",function(){copySetup(item);});
       addAction(actions,"Rename","",function(){openModal("rename",item);});
       addAction(actions,"Delete","danger",function(){removeSaved(item.id);});
@@ -689,6 +761,8 @@ footer a{color:#618276;text-decoration:none}
     range.addEventListener("input",function(){numeric.value=range.value;renderResults(true);});
     numeric.addEventListener("input",function(){
       var value=safeNumber(numeric.value,defaults[row[2]],0,1000000);
+      if(row[2]==="staff"||row[2]==="inventory")value=Math.round(value);
+      numeric.value=value;
       if(value>=Number(range.min)&&value<=Number(range.max))range.value=value;
       renderResults(true);
     });
@@ -696,6 +770,8 @@ footer a{color:#618276;text-decoration:none}
   document.querySelectorAll(".model-input").forEach(function(input){input.addEventListener("input",function(){renderResults(true);});});
   ["wageInput","product1Name","product2Name","product3Name"].forEach(function(id){document.getElementById(id).addEventListener("input",function(){renderResults(true);});});
   document.getElementById("businessType").addEventListener("change",updateBusinessPreset);
+  document.getElementById("tryExample").addEventListener("click",loadPriceCutExample);
+  document.getElementById("applyNextWeek").addEventListener("click",applyNextWeekRating);
   document.getElementById("workingName").addEventListener("input",function(){draft=readDraft();setStore(KEYS.draft,draft);});
   document.getElementById("runSimulation").addEventListener("click",runSimulation);
   document.getElementById("pasteSetup").addEventListener("click",pasteSetup);
