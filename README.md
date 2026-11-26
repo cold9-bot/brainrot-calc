@@ -8,7 +8,7 @@ A small portfolio containing three browser apps:
 
 ## Try the apps
 
-Open the calculator app in calculator/index.html, Threadline in threadline/storyflow.html, or Ripple Map in ripple.html. Threadline's browser analysis works without an API key. It also has an optional AI analysis mode. Ripple Map runs its illustrative daily model in the browser and stores scenarios locally on the device.
+Open the calculator app in calculator/index.html, Threadline in threadline/storyflow.html, or Ripple Map in ripple.html. Threadline's browser analysis works without an API key. It also has an optional AI analysis mode. Ripple Map shows the four levers and five connected outcomes, daily/weekly/monthly scoreboard projections, the next-week rating loop, and a recent/saved scenario library. It runs in the browser and stores scenarios locally on the device.
 
 ## Source
 
