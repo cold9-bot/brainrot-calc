@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A portfolio of two browser apps: Brainrot Calc and Threadline.">
+    <meta name="description" content="A portfolio of browser apps: Brainrot Calc, Threadline, and Ripple Map.">
   <title>Selected Builds — App Portfolio</title>
   <style>
     :root{color-scheme:dark;--bg:#101918;--panel:#192321;--panel2:#202c29;--line:#34433e;--text:#f2f0e8;--muted:#aab5ad;--mint:#87d7b4;--gold:#f1c575;--coral:#ff9d85}
@@ -27,13 +27,15 @@
     .section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:20px 0 18px}
     .section-head h2{font-size:18px;letter-spacing:-.4px;margin:0}
     .section-head span{font-size:11px;color:var(--muted)}
-    .projects{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-bottom:68px}
+    .projects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding-bottom:68px}
     .project{position:relative;overflow:hidden;min-height:344px;background:linear-gradient(145deg,#1c2926,#17211f);border:1px solid var(--line);border-radius:18px;padding:25px;display:flex;flex-direction:column}
     .project:after{content:"";position:absolute;width:175px;height:175px;border:1px solid #ffffff0d;border-radius:50%;right:-80px;top:-82px;box-shadow:0 0 0 24px #ffffff05,0 0 0 49px #ffffff03;pointer-events:none}
     .project:nth-child(2){background:linear-gradient(145deg,#28262b,#1b2221)}
+    .project:nth-child(3){background:linear-gradient(145deg,#20302c,#182320)}
     .project-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
     .icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:20px;font-weight:800}
     .calc .icon{background:#d8f0a0;color:#26331d}.thread .icon{background:#f4c47a;color:#38271d}
+    .ripple .icon{background:#a8ddd0;color:#173b35}
     .number{font:11px ui-monospace,SFMono-Regular,Menlo,monospace;color:#94a39a}
     .project h3{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-size:29px;font-weight:500;letter-spacing:-.7px;margin:26px 0 9px}
     .project p{color:#bdc6bf;font-size:13px;line-height:1.7;margin:0;max-width:460px}
@@ -43,6 +45,7 @@
     .button{display:inline-flex;align-items:center;gap:9px;border-radius:9px;padding:11px 14px;font-size:11px;font-weight:750;text-decoration:none}
     .button.primary{background:var(--mint);color:#14231d}
     .thread .button.primary{background:var(--gold);color:#28211a}
+    .ripple .button.primary{background:#a8ddd0;color:#173b35}
     .button.primary:hover{filter:brightness(1.07);transform:translateY(-1px)}
     .code-link{font-size:11px;color:#cbd5ce;text-decoration:none;border-bottom:1px solid #84958a;padding:4px 0}
     .code-link:hover{color:var(--mint);border-color:var(--mint)}
@@ -57,7 +60,8 @@
     .about-card strong{display:block;color:var(--gold);font-size:10px;letter-spacing:.5px;margin-bottom:7px}
     footer{border-top:1px solid #ffffff12;padding:17px 0 25px;display:flex;justify-content:space-between;color:#839189;font-size:10px}
     footer a{text-decoration:none}
-    @media(max-width:700px){.shell{width:min(100% - 28px,540px)}header{height:64px}.nav{gap:12px}.nav a:not(.repo-link){display:none}.hero{padding:62px 0 43px}.hero p{font-size:14px}.projects{grid-template-columns:1fr;padding-bottom:48px}.project{min-height:320px;padding:21px}.about{grid-template-columns:1fr}.section-head span{display:none}}
+    @media(max-width:980px){.projects{grid-template-columns:repeat(2,minmax(0,1fr))}.project:last-child{grid-column:1/-1}}
+    @media(max-width:700px){.shell{width:min(100% - 28px,540px)}header{height:64px}.nav{gap:12px}.nav a:not(.repo-link){display:none}.hero{padding:62px 0 43px}.hero p{font-size:14px}.projects{grid-template-columns:1fr;padding-bottom:48px}.project:last-child{grid-column:auto}.project{min-height:320px;padding:21px}.about{grid-template-columns:1fr}.section-head span{display:none}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}}
   </style>
 </head>
@@ -76,8 +80,8 @@
       <section class="hero">
         <div class="eyebrow">Browser apps · product experiments</div>
         <h1>Small tools for working through big thoughts.</h1>
-        <p>One app gives calculations a place to live with their notes. The other turns a long piece of text into a path you can explore, one idea at a time.</p>
-        <div class="hero-bottom"><span class="spark">✳</span><span>Two independent builds, made to be tried in the browser.</span></div>
+        <p>One app gives calculations a place to live with their notes. Another turns a long text into a path you can explore. Ripple Map lets you change one business assumption and follow its effects through a connected workflow.</p>
+        <div class="hero-bottom"><span class="spark">✳</span><span>Three independent builds, made to be tried in the browser.</span></div>
       </section>
       <section id="projects" aria-labelledby="projectsTitle">
         <div class="section-head"><h2 id="projectsTitle">The projects</h2><span>Pick one to open the app or browse its code.</span></div>
@@ -107,11 +111,21 @@
               <a href="https://github.com/cold9-bot/brainrot-calc/archive/refs/heads/main.zip">Download the repository ↗</a> · <a href="https://github.com/cold9-bot/brainrot-calc#optional-ai-analysis">Full setup instructions ↗</a>
             </details>
           </article>
+          <article class="project ripple">
+            <div class="project-top"><div class="icon" aria-hidden="true">⌁</div><span class="number">03 / SIMULATE</span></div>
+            <h3>Ripple Map</h3>
+            <p>An interactive small-business workflow. Adjust price, promotions, staffing, or stock and see the ripple through customer traffic, rush, wait time, ratings, and daily profit.</p>
+            <div class="chips"><span class="chip">9 connected nodes</span><span class="chip">Live INR scoreboard</span><span class="chip">Save scenarios</span></div>
+            <div class="project-actions">
+              <a class="button primary" href="ripple.html">Open Ripple Map <span aria-hidden="true">↗</span></a>
+              <a class="code-link" href="https://github.com/cold9-bot/brainrot-calc/blob/main/ripple.html">View code</a>
+            </div>
+          </article>
         </div>
       </section>
       <section class="about" id="about">
-        <div><h2>Built around a clear interaction</h2><p>Brainrot Calc keeps the expression, answer, and explanation together. Threadline keeps a text’s sequence visible while making each section easier to inspect. Both are browser-based and save their personal workspace data locally.</p></div>
-        <div class="about-card"><strong>OPEN SOURCE + PROJECT PROMPTS</strong><p>Both browser apps are included in this repository. Threadline works without a key in browser mode and offers optional AI analysis through a local server. Compare the polished product briefs with the original prompts that started each idea. <a href="https://github.com/cold9-bot/brainrot-calc/blob/main/PROMPTS.md">Polished prompts ↗</a> · <a href="https://github.com/cold9-bot/brainrot-calc/blob/main/ORIGINAL_PROMPTS.md">Original prompts ↗</a></p></div>
+        <div><h2>Built around a clear interaction</h2><p>Brainrot Calc keeps the expression, answer, and explanation together. Threadline keeps a text’s sequence visible while making each section easier to inspect. Ripple Map makes the relationships between business choices and outcomes visible. Each app runs in the browser and saves its workspace data locally.</p></div>
+        <div class="about-card"><strong>OPEN SOURCE + PROJECT PROMPTS</strong><p>All three browser apps are included in this repository. Threadline works without a key in browser mode and offers optional AI analysis through a local server. Compare the polished product briefs with the original prompts that started the ideas. <a href="https://github.com/cold9-bot/brainrot-calc/blob/main/PROMPTS.md">Polished prompts ↗</a> · <a href="https://github.com/cold9-bot/brainrot-calc/blob/main/ORIGINAL_PROMPTS.md">Original prompts ↗</a></p></div>
       </section>
     </main>
     <footer><span>Selected builds · 2026</span><a href="https://github.com/cold9-bot/brainrot-calc">Source repository ↗</a></footer>
