@@ -1,6 +1,6 @@
 # Project prompts
 
-The prompts below describe the features and behavior of each app. also one important part use spacebar to scroll down
+The prompts below describe the features and behavior of each app. Use the spacebar or down arrow to move down the page in each app.
 
 ## Brainrot Calc
 
@@ -21,3 +21,13 @@ Offer two analysis modes. The default browser mode works without an AI service, 
 Show a button for each block across the screen. When a block is selected, display a flowchart of how its ideas connect and a detailed summary beside it. Show important parts of the full text in separate categories, such as context, conflict, key events, turning points, outcome, and recurring ideas. Include People / subjects only when they are relevant. Do not show a section that simply repeats the original text.
 
 Let users save a complete map—including its source, blocks, summaries, flowcharts, key points, and analysis mode—in a library inside the app. Add a New Map option that opens a fresh workspace. Do not include a preloaded sample map.
+
+## Ripple Map
+
+Build a browser-based workflow simulator for exploring how decisions affect a small Indian business. Show four adjustable daily levers—average item price, advertising spend, staff count and wage, and inventory—feeding a connected chain of five calculated outcomes: customer traffic, peak-hour rush, staff load, service wait, and customer rating. Animate the affected nodes when a lever changes.
+
+Use editable assumptions for the traffic response to price, ads, and prior ratings; peak traffic share and hours; staff-load multiplier; wait-time effect; stockout rating penalty; wholesale cost; rent and utilities; and spoilage rate. Provide cafe and retail presets, an editable three-product sales mix, and show the formulas and assumptions clearly.
+
+Keep a separate live scoreboard for daily, weekly, and monthly units sold; weekly and monthly footfall; sales; expenses; net profit or loss; a cost breakdown; and the estimated top-selling product. Cap sales at available inventory, calculate unsold-stock loss, and feed the current rating into the next-week traffic estimate. Repeat daily values for the 7-day and 30-day views and state that these are illustrative scenarios rather than forecasts.
+
+Let users run named simulations and keep a recent-run list. Each run can be saved, copied, copied as a results summary, or deleted. Let users paste a copied setup into the workspace, and maintain a separate list of named saved scenarios with load, copy, rename, and delete actions. Store the workspace, runs, saved scenarios, and clipboard locally in the browser.
