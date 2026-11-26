@@ -1,6 +1,6 @@
 # Original prompts
 
-These are the original prompts and starting ideas for the two apps, preserved as written. The ideas and feature direction came first; AI later helped polish the wording with a few minor changes while keeping the concepts intact. See [PROMPTS.md](PROMPTS.md) for the polished versions.
+These are the original prompts and starting ideas for the apps, preserved as written. The ideas and feature direction came first; AI later helped polish the wording with a few minor changes while keeping the concepts intact. See [PROMPTS.md](PROMPTS.md) for the polished versions.
 
 ## Brainrot Calc
 
@@ -9,3 +9,7 @@ These are the original prompts and starting ideas for the two apps, preserved as
 ## Threadline
 
 > k build an app where a particulart conept of story or any other conetnt (text related) must be netered into the upload portal which can take pdfs or files of nay form into it or direct text simply writeen directly into the enter bar ,like that concept is broken down into blocks in a synchronized linear order of flow based on the story where if u can click one button then it opens an block relted to that conctet or story after lcikcing ecah and every button it shows a visul represntation like flowchart showing how the topic is broken down in for that specifc block and a detaioeld summary ofr that spefic topic in that block beside the flow cahrt ,where the entire buttons for ecah of tgose block are shown in a synchronized manner across the entire horizontal screen , also another part of app shows the important parts of the story in bullet pointsunder spefic types not like entire bullet point6s of the entire story is given in one shot is given out
+
+## Ripple Map
+
+> Ripple Map — Draw a simple system as connected parts. Change one part and show which other parts might be affected. Try it with a game, a club event, or a small business. This would test your systems thinking.
