@@ -1,17 +1,18 @@
 # Selected Builds
 
-A small portfolio containing two browser apps:
+A small portfolio containing three browser apps:
 
 - **Brainrot Calc** — a scientific calculator with notes, recent calculations, and a folder-based library.
 - **Threadline** — a text story map with ordered blocks, flow diagrams, summaries, and categorized key points.
+- **Ripple Map** — an interactive small-business workflow simulator that shows how price, promotion, staffing, and inventory ripple through demand, service, ratings, and profit.
 
 ## Try the apps
 
-Open the calculator app in calculator/index.html or Threadline in threadline/storyflow.html. Threadline's browser analysis works without an API key. It also has an optional AI analysis mode.
+Open the calculator app in calculator/index.html, Threadline in threadline/storyflow.html, or Ripple Map in ripple.html. Threadline's browser analysis works without an API key. It also has an optional AI analysis mode. Ripple Map runs its illustrative daily model in the browser and stores scenarios locally on the device.
 
 ## Source
 
-The HTML app files are the source for each browser app. Threadline keeps browser analysis available without an AI API key or server. Its optional AI analysis mode uses the local Python server in `threadline/threadline_server.py`; the key is read from the environment and is never included in the app files.
+The HTML app files are the source for each browser app. Threadline keeps browser analysis available without an AI API key or server. Its optional AI analysis mode uses the local Python server in `threadline/threadline_server.py`; the key is read from the environment and is never included in the app files. Ripple Map exposes its formulas and assumptions so users can adjust them; its outputs are examples for exploring cause and effect, not business forecasts.
 
 ## Project prompts
 
