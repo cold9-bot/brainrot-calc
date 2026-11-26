@@ -281,7 +281,7 @@ footer a{color:#618276;text-decoration:none}
           <article class="flow-node" id="nodePeak" aria-live="polite">
             <div class="node-head"><span class="node-id">NODE 06</span><span class="node-kind">CAPACITY</span></div>
             <h3>Peak hour rush</h3>
-            <div><span class="node-value" id="outPeak">25</span><span class="node-unit">/ hour</span></div>
+            <div><span class="node-value" id="outPeak">24.9</span><span class="node-unit">/ hour</span></div>
             <div class="node-detail" id="peakDetail">55% in the chosen peak window.</div><div class="node-status">Peak concentration</div>
           </article>
           <div class="connector" aria-hidden="true"><b>→</b><span>load</span></div>
@@ -295,7 +295,7 @@ footer a{color:#618276;text-decoration:none}
           <article class="flow-node" id="nodeWait" aria-live="polite">
             <div class="node-head"><span class="node-id">NODE 08</span><span class="node-kind">SERVICE</span></div>
             <h3>Service wait</h3>
-            <div><span class="node-value" id="outWait">13</span><span class="node-unit">min</span></div>
+            <div><span class="node-value" id="outWait">12.9</span><span class="node-unit">min</span></div>
             <div class="node-detail" id="waitDetail">Base wait plus load effect.</div><div class="node-status" id="waitStatus">Estimated queue time</div>
           </article>
           <div class="connector" aria-hidden="true"><b>→</b><span>rating</span></div>
@@ -363,41 +363,41 @@ footer a{color:#618276;text-decoration:none}
     <aside class="panel scoreboard" aria-labelledby="scoreTitle">
       <div class="score-head"><div><div class="eyebrow">LIVE SCOREBOARD</div><h2 id="scoreTitle">Daily business snapshot</h2></div><span class="live-dot"><i></i> UPDATING</span></div>
       <div class="kpi-block">
-        <div class="kpi-label">Units sold · daily baseline</div><div class="kpi-major" id="dailyUnits">158</div>
-        <div class="kpi-sub" id="unitsLimitNote">Sales are capped by available stock.</div>
-        <div class="time-strip"><div class="time-box"><span>Day</span><strong id="unitsDay">158</strong></div><div class="time-box"><span>7 days</span><strong id="unitsWeek">1,106</strong></div><div class="time-box"><span>30 days</span><strong id="unitsMonth">4,740</strong></div></div>
+        <div class="kpi-label">Units sold · daily baseline</div><div class="kpi-major" id="dailyUnits">169</div>
+        <div class="kpi-sub" id="unitsLimitNote">31 units remain in the daily inventory model.</div>
+        <div class="time-strip"><div class="time-box"><span>Day</span><strong id="unitsDay">169</strong></div><div class="time-box"><span>7 days</span><strong id="unitsWeek">1,183</strong></div><div class="time-box"><span>30 days</span><strong id="unitsMonth">5,070</strong></div></div>
       </div>
       <div class="flow-stats">
-        <div class="flow-stat"><span>Footfall · 7 days</span><strong id="footfallWeek">790</strong></div>
-        <div class="flow-stat"><span>Footfall · 30 days</span><strong id="footfallMonth">3,375</strong></div>
+        <div class="flow-stat"><span>Footfall · 7 days</span><strong id="footfallWeek">791</strong></div>
+        <div class="flow-stat"><span>Footfall · 30 days</span><strong id="footfallMonth">3,390</strong></div>
       </div>
       <div class="flow-stats">
-        <div class="flow-stat"><span>Money in · day sales</span><strong id="moneyIn">₹23,700</strong></div>
-        <div class="flow-stat"><span>Money out · day costs</span><strong id="moneyOut">₹13,?00</strong></div>
+        <div class="flow-stat"><span>Money in · day sales</span><strong id="moneyIn">₹25,350</strong></div>
+        <div class="flow-stat"><span>Money out · day costs</span><strong id="moneyOut">₹23,113</strong></div>
       </div>
       <div class="profit-block" id="profitBlock">
-        <div class="kpi-label">Net profit / loss · per day</div><div class="kpi-major" id="netProfit">₹0</div>
+        <div class="kpi-label">Net profit / loss · per day</div><div class="kpi-major" id="netProfit">₹2,237</div>
         <div class="kpi-sub">Combined UPI, cash, and card sales minus modeled expenses.</div>
       </div>
       <div class="projection-grid" aria-label="Repeated daily scenario projections">
         <div class="projection-head">Estimate</div><div class="projection-head">Day</div><div class="projection-head">7 days</div><div class="projection-head">30 days</div>
-        <div class="projection-row-label">Sales</div><div id="salesDayProjection">₹0</div><div id="salesWeekProjection">₹0</div><div id="salesMonthProjection">₹0</div>
-        <div class="projection-row-label">Costs</div><div id="costDayProjection">₹0</div><div id="costWeekProjection">₹0</div><div id="costMonthProjection">₹0</div>
-        <div class="projection-row-label">Net</div><div id="netDayProjection">₹0</div><div id="netWeekProjection">₹0</div><div id="netMonthProjection">₹0</div>
+        <div class="projection-row-label">Sales</div><div id="salesDayProjection">₹25,350</div><div id="salesWeekProjection">₹177,450</div><div id="salesMonthProjection">₹760,500</div>
+        <div class="projection-row-label">Costs</div><div id="costDayProjection">₹23,113</div><div id="costWeekProjection">₹161,791</div><div id="costMonthProjection">₹693,390</div>
+        <div class="projection-row-label">Net</div><div id="netDayProjection">₹2,237</div><div id="netWeekProjection">₹15,659</div><div id="netMonthProjection">₹67,110</div>
       </div>
       <div class="projection-note">Week and month repeat today's assumptions (×7 / ×30); weekends and seasonality are not modeled.</div>
       <ul class="cost-list" aria-label="Daily expense breakdown">
-        <li><span>Wholesale cost</span><strong id="costWholesale">₹0</strong></li>
-        <li><span>Staff wages</span><strong id="costStaff">₹0</strong></li>
-        <li><span>Ads / promotions</span><strong id="costAds">₹0</strong></li>
-        <li><span>Spoilage / dead stock</span><strong id="costSpoilage">₹0</strong></li>
-        <li><span>Fixed rent + utilities</span><strong id="costFixed">₹0</strong></li>
+        <li><span>Wholesale cost</span><strong id="costWholesale">₹18,590</strong></li>
+        <li><span>Staff wages</span><strong id="costStaff">₹1,800</strong></li>
+        <li><span>Ads / promotions</span><strong id="costAds">₹500</strong></li>
+        <li><span>Spoilage / dead stock</span><strong id="costSpoilage">₹1,023</strong></li>
+        <li><span>Fixed rent + utilities</span><strong id="costFixed">₹1,200</strong></li>
       </ul>
       <div class="best-sellers">
         <div class="best-head"><strong>Best-selling products</strong><span>Estimated units / day</span></div>
-        <table class="product-table"><thead><tr><th>Product</th><th>Mix</th><th>Units</th></tr></thead><tbody id="productRows"></tbody></table>
+    <table class="product-table"><thead><tr><th>Product</th><th>Mix</th><th>Units</th></tr></thead><tbody id="productRows"><tr><td>Masala chai <span class="seller-badge">★ BEST SELLER</span></td><td>50%</td><td>84</td></tr><tr><td>Coffee</td><td>30%</td><td>51</td></tr><tr><td>Snack</td><td>20%</td><td>34</td></tr></tbody></table>
       </div>
-      <div class="loop-note"><strong>Next-week loop:</strong> this run's <b id="nextRatingValue">3.1★</b> becomes the review input and estimates <b id="nextWeekTraffic">77 customers/day</b>. <button class="btn soft" id="applyNextWeek" type="button">Use this rating for next week</button></div>
+      <div class="loop-note"><strong>Next-week loop:</strong> this run's <b id="nextRatingValue">3.1★</b> becomes the review input and estimates <b id="nextWeekTraffic">78 customers/day</b>. <button class="btn soft" id="applyNextWeek" type="button">Use this rating for next week</button></div>
     </aside>
   </section>
 
@@ -439,7 +439,9 @@ footer a{color:#618276;text-decoration:none}
   function setStore(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch(e){return false;}}
   function copyObject(value){return JSON.parse(JSON.stringify(value));}
   function numberValue(id,fallback){var el=document.getElementById(id);var n=Number(el.value);return Number.isFinite(n)?n:fallback;}
-  function safeNumber(value,fallback,min,max){var n=Number(value);if(!Number.isFinite(n))n=fallback;if(typeof min==="number")n=Math.max(min,n);if(typeof max==="number")n=Math.min(max,n);return n;}
+  function safeNumber(value,fallback,min,max){var n=value===""||value===null||typeof value==="undefined"?fallback:Number(value);if(!Number.isFinite(n))n=fallback;if(typeof min==="number")n=Math.max(min,n);if(typeof max==="number")n=Math.min(max,n);return n;}
+  function inputNumber(input,fallback){var min=input.hasAttribute("min")?Number(input.min):0;var max=input.hasAttribute("max")?Number(input.max):1000000;return safeNumber(input.value,fallback,min,max);}
+  function normalizeNumberInput(input,fallback,integer){var value=inputNumber(input,fallback);if(integer)value=Math.round(value);input.value=String(value);return value;}
   function getText(id,fallback){var value=document.getElementById(id).value.trim();return value||fallback;}
   function fmt(n,digits){return new Intl.NumberFormat("en-IN",{maximumFractionDigits:digits||0,minimumFractionDigits:0}).format(Number.isFinite(n)?n:0);}
   function money(n){return (n<0?"-":"")+"₹"+fmt(Math.abs(n),0);}
@@ -493,21 +495,19 @@ footer a{color:#618276;text-decoration:none}
   function readDraft(){
     var c={businessType:document.getElementById("businessType").value,name:getText("workingName","Untitled setup")};
     bindings.forEach(function(row){
-      var value=safeNumber(document.getElementById(row[1]).value,defaults[row[2]],0,1000000);
+      var value=inputNumber(document.getElementById(row[1]),defaults[row[2]]);
       c[row[2]]=(row[2]==="staff"||row[2]==="inventory")?Math.round(value):value;
     });
-    c.wage=safeNumber(document.getElementById("wageInput").value,defaults.wage,0,1000000);
+    c.wage=inputNumber(document.getElementById("wageInput"),defaults.wage);
     modelFields.forEach(function(row){
       if(row[1].indexOf("product")===0)return;
       var defaultValue=defaults[row[1]];
-      var min=row[1]==="previousRating"?1:0;
-      var max=row[1]==="previousRating"?5:(row[1]==="spoilageRate"||row[1]==="peakShare"||row[1]==="loadThreshold"||row[1]==="moraleStressPoints"?100:1000000);
-      c[row[1]]=safeNumber(document.getElementById(row[0]).value,defaultValue,min,max);
+      c[row[1]]=inputNumber(document.getElementById(row[0]),defaultValue);
     });
     c.products=[
-      {name:getText("product1Name","Item 1"),share:safeNumber(document.getElementById("product1Share").value,50,0,100)},
-      {name:getText("product2Name","Item 2"),share:safeNumber(document.getElementById("product2Share").value,30,0,100)},
-      {name:getText("product3Name","Item 3"),share:safeNumber(document.getElementById("product3Share").value,20,0,100)}
+      {name:getText("product1Name","Item 1"),share:inputNumber(document.getElementById("product1Share"),50)},
+      {name:getText("product2Name","Item 2"),share:inputNumber(document.getElementById("product2Share"),30)},
+      {name:getText("product3Name","Item 3"),share:inputNumber(document.getElementById("product3Share"),20)}
     ];
     return c;
   }
@@ -765,15 +765,31 @@ footer a{color:#618276;text-decoration:none}
     var range=document.getElementById(row[0]);var numeric=document.getElementById(row[1]);
     range.addEventListener("input",function(){numeric.value=range.value;renderResults(true);});
     numeric.addEventListener("input",function(){
-      var value=safeNumber(numeric.value,defaults[row[2]],0,1000000);
+      if(numeric.value==="")return;
+      var value=inputNumber(numeric,defaults[row[2]]);
       if(row[2]==="staff"||row[2]==="inventory")value=Math.round(value);
-      numeric.value=value;
+      if(value>=Number(range.min)&&value<=Number(range.max))range.value=value;
+      renderResults(true);
+    });
+    numeric.addEventListener("change",function(){
+      var value=normalizeNumberInput(numeric,draft[row[2]]===undefined?defaults[row[2]]:draft[row[2]],row[2]==="staff"||row[2]==="inventory");
       if(value>=Number(range.min)&&value<=Number(range.max))range.value=value;
       renderResults(true);
     });
   });
-  document.querySelectorAll(".model-input").forEach(function(input){input.addEventListener("input",function(){renderResults(true);});});
-  ["wageInput","product1Name","product2Name","product3Name"].forEach(function(id){document.getElementById(id).addEventListener("input",function(){renderResults(true);});});
+  document.querySelectorAll(".model-input").forEach(function(input){
+    input.addEventListener("input",function(){if(input.value!=="")renderResults(true);});
+    input.addEventListener("change",function(){
+      var id=input.id;var row=modelFields.find(function(item){return item[0]===id;});var fallback=0;
+      if(row){var key=row[1];if(key==="product1Share")fallback=draft.products[0].share;else if(key==="product2Share")fallback=draft.products[1].share;else if(key==="product3Share")fallback=draft.products[2].share;else fallback=draft[key]===undefined?defaults[key]:draft[key];}
+      normalizeNumberInput(input,fallback,false);renderResults(true);
+    });
+  });
+  ["wageInput","product1Name","product2Name","product3Name"].forEach(function(id){
+    var input=document.getElementById(id);
+    input.addEventListener("input",function(){if(id!=="wageInput"||input.value!=="")renderResults(true);});
+    if(id==="wageInput")input.addEventListener("change",function(){normalizeNumberInput(input,draft.wage,false);renderResults(true);});
+  });
   document.getElementById("businessType").addEventListener("change",updateBusinessPreset);
   document.getElementById("tryExample").addEventListener("click",loadPriceCutExample);
   document.getElementById("applyNextWeek").addEventListener("click",applyNextWeekRating);
