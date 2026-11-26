@@ -258,11 +258,11 @@ footer a{color:#618276;text-decoration:none}
         </article>
       </div>
 
-      <div class="flow-callout"><strong>How the levers feed the chain:</strong> price, ads, and the previous review shape traffic; traffic creates the peak rush; staff count shapes load; wait time and stockouts shape the next rating. Inventory also caps units sold and affects spoilage. Wages, ads, wholesale cost, and fixed costs feed the scoreboard.</div>
+      <div class="flow-callout"><strong>How the levers feed the chain:</strong> price, ads, and the previous review shape traffic; traffic creates the peak rush; staff count and low pay shape load; wait time and stockouts shape the next rating. Inventory caps units sold and affects spoilage. Wages, ads, wholesale cost, and fixed costs feed the scoreboard.</div>
       <div class="influence-routes" aria-label="Cause and effect connections">
         <div class="influence-route"><b>01 Price</b> + <b>02 Ads</b> + previous rating <span class="route-arrow">→</span><b>05 Customer traffic</b></div>
         <div class="influence-route"><b>05 Traffic</b> + peak share <span class="route-arrow">→</span><b>06 Peak rush</b> <span class="route-arrow">→</span><b>07 Staff load</b></div>
-        <div class="influence-route"><b>03 Staff count</b> <span class="route-arrow">→</span><b>07 Load</b> · <b>04 Inventory</b> <span class="route-arrow">→</span><b>Sales cap + stockout + spoilage</b></div>
+        <div class="influence-route"><b>03 Staff + wage</b> <span class="route-arrow">→</span><b>07 Load + morale</b> · <b>04 Inventory</b> <span class="route-arrow">→</span><b>Sales cap + stockout + spoilage</b></div>
         <div class="influence-route"><b>08 Wait</b> + stockout <span class="route-arrow">→</span><b>09 Rating</b> <span class="route-arrow">→</span><b>Next-week traffic</b></div>
         <div class="influence-route"><b>Units × price</b> <span class="route-arrow">→</span><b>Sales</b> · wages + ads + stock + fixed costs <span class="route-arrow">→</span><b>Net</b></div>
       </div>
@@ -336,6 +336,8 @@ footer a{color:#618276;text-decoration:none}
               <label>Peak share of daily traffic (%)<input class="model-input" id="peakShare" type="number" min="0" max="100" step="1" value="55"></label>
               <label>Peak window hours<input class="model-input" id="peakHours" type="number" min="0.5" max="24" step="0.5" value="2.5"></label>
               <label>Staff load multiplier<input class="model-input" id="loadMultiplier" type="number" min="0" max="30" step="0.5" value="8"></label>
+              <label>Reference wage / person / day (₹)<input class="model-input" id="referenceWage" type="number" min="0" step="50" value="600"></label>
+              <label>Maximum low-wage morale stress (points)<input class="model-input" id="moraleStressPoints" type="number" min="0" max="100" step="1" value="20"></label>
               <label>Wait-time base (minutes)<input class="model-input" id="baseWait" type="number" min="0" max="60" step="0.5" value="3"></label>
               <label>Wait impact multiplier<input class="model-input" id="waitImpact" type="number" min="0" max="1" step="0.01" value="0.15"></label>
               <label>Stockout rating penalty<input class="model-input" id="stockoutPenalty" type="number" min="0" max="4" step="0.1" value="0.8"></label>
@@ -345,7 +347,7 @@ footer a{color:#618276;text-decoration:none}
           <div class="formula-list" aria-label="Full model formulas">
             <div class="formula-line"><strong>1 · Customer traffic / day</strong><code>Base customers × (1 − price sensitivity × price change) × (1 + ad response × ad change) × (previous rating ÷ 4)</code><br>Price and ad changes are relative to their reference values. Defaults: sensitivity 1.5 and ad response 0.4. A 10% price increase at 1.5 sensitivity reduces the price factor by 15%.</div>
             <div class="formula-line"><strong>2 · Peak rush / hour</strong><code>(customers / day × peak share) ÷ peak-window hours</code><br>Default: 55% of daily traffic across 2.5 hours.</div>
-            <div class="formula-line"><strong>3 · Staff stress / load</strong><code>min(100%, (peak customers / hour ÷ staff count) × load multiplier)</code><br>Above the selected threshold (70% by default) is marked as burnout risk. With zero staff, the model uses 100% load. Staff pay is included in costs; the supplied stress equation does not specify a separate morale effect.</div>
+            <div class="formula-line"><strong>3 · Staff stress / load</strong><code>min(100%, (peak customers / hour ÷ staff count) × load multiplier + low-wage morale points)</code><br>Morale points rise linearly below the reference wage (₹600 and up to 20 points by default; both are editable). Above the selected threshold (70% by default) is marked as burnout risk. With zero staff, load is 100%.</div>
             <div class="formula-line"><strong>4 · Service wait</strong><code>base wait (3 min) + stress percentage × 0.15</code></div>
             <div class="formula-line"><strong>5 · Units, stockout, and rating</strong><code>Demand = customers × avg items/order; whole units sold = floor(min(demand, inventory))</code><br><code>Stockout = demand &gt; inventory; rating = clamp(1, 5, 5 − wait × 0.15 − (0.8 if stockout))</code></div>
             <div class="formula-line"><strong>6 · Spoilage / dead stock</strong><code>max(0, inventory − units sold) × wholesale cost × spoilage rate</code><br>Default spoilage: 30% cafe, 5% retail.</div>
@@ -430,7 +432,7 @@ footer a{color:#618276;text-decoration:none}
     businessType:"cafe",price:150,ads:500,staff:3,wage:600,inventory:200,
     baseCustomers:100,referencePrice:150,referenceAds:500,previousRating:4.5,itemsPerOrder:1.5,
     wholesaleCost:110,fixedDaily:1200,spoilageRate:30,priceElasticity:1.5,adResponse:0.4,
-    peakShare:55,peakHours:2.5,loadMultiplier:8,baseWait:3,waitImpact:0.15,stockoutPenalty:0.8,loadThreshold:70,
+    peakShare:55,peakHours:2.5,loadMultiplier:8,referenceWage:600,moraleStressPoints:20,baseWait:3,waitImpact:0.15,stockoutPenalty:0.8,loadThreshold:70,
     products:[{name:"Masala chai",share:50},{name:"Coffee",share:30},{name:"Snack",share:20}]
   };
   function getStore(key,fallback){try{var value=localStorage.getItem(key);return value?JSON.parse(value):fallback;}catch(e){return fallback;}}
@@ -461,7 +463,8 @@ footer a{color:#618276;text-decoration:none}
     ["previousRating","previousRating"],["itemsPerOrder","itemsPerOrder"],["wholesaleCost","wholesaleCost"],
     ["fixedDaily","fixedDaily"],["spoilageRate","spoilageRate"],["priceElasticity","priceElasticity"],
     ["adResponse","adResponse"],["peakShare","peakShare"],["peakHours","peakHours"],
-    ["loadMultiplier","loadMultiplier"],["baseWait","baseWait"],["waitImpact","waitImpact"],
+    ["loadMultiplier","loadMultiplier"],["referenceWage","referenceWage"],["moraleStressPoints","moraleStressPoints"],
+    ["baseWait","baseWait"],["waitImpact","waitImpact"],
     ["stockoutPenalty","stockoutPenalty"],["loadThreshold","loadThreshold"],["product1Share","product1Share"],
     ["product2Share","product2Share"],["product3Share","product3Share"]
   ];
@@ -498,7 +501,7 @@ footer a{color:#618276;text-decoration:none}
       if(row[1].indexOf("product")===0)return;
       var defaultValue=defaults[row[1]];
       var min=row[1]==="previousRating"?1:0;
-      var max=row[1]==="previousRating"?5:(row[1]==="spoilageRate"||row[1]==="peakShare"||row[1]==="loadThreshold"?100:1000000);
+      var max=row[1]==="previousRating"?5:(row[1]==="spoilageRate"||row[1]==="peakShare"||row[1]==="loadThreshold"||row[1]==="moraleStressPoints"?100:1000000);
       c[row[1]]=safeNumber(document.getElementById(row[0]).value,defaultValue,min,max);
     });
     c.products=[
@@ -521,7 +524,9 @@ footer a{color:#618276;text-decoration:none}
     var customers=Math.round(rawTraffic);
     var peakShare=c.peakShare/100;
     var peakCustomersPerHour=c.peakHours>0?(customers*peakShare)/c.peakHours:0;
-    var staffLoad=c.staff>0?Math.min(100,(peakCustomersPerHour/c.staff)*c.loadMultiplier):100;
+    var workloadStress=c.staff>0?(peakCustomersPerHour/c.staff)*c.loadMultiplier:100;
+    var moraleStress=c.referenceWage>0&&c.wage<c.referenceWage?((c.referenceWage-c.wage)/c.referenceWage)*c.moraleStressPoints:0;
+    var staffLoad=Math.min(100,workloadStress+moraleStress);
     var wait=c.baseWait+(staffLoad*c.waitImpact);
     var demandUnits=customers*c.itemsPerOrder;
     var stockout=demandUnits>c.inventory;
@@ -545,7 +550,7 @@ footer a{color:#618276;text-decoration:none}
     for(var i=0;i<left;i++)counts[remainders[i%remainders.length].index]++;
     var products=c.products.map(function(item,index){return {name:item.name||("Item "+(index+1)),share:shareTotal?productShares[index]/shareTotal*100:33.333,units:counts[index]};}).sort(function(a,b){return b.units-a.units;});
     return {
-      customers:customers,rawTraffic:rawTraffic,peak:peakCustomersPerHour,load:staffLoad,wait:wait,
+      customers:customers,rawTraffic:rawTraffic,peak:peakCustomersPerHour,load:staffLoad,workloadStress:workloadStress,moraleStress:moraleStress,wait:wait,
       demandUnits:demandUnits,units:unitsSold,stockout:stockout,rating:rating,nextWeekTraffic:nextWeekTraffic,
       unsold:unsold,spoilageLoss:spoilageLoss,sales:sales,wholesale:wholesale,staffCost:staffCost,
       ads:c.ads,fixed:c.fixedDaily,expenses:expenses,profit:profit,products:products,
@@ -585,7 +590,7 @@ footer a{color:#618276;text-decoration:none}
     updateNode("outRating","rating",r.rating,r.rating.toFixed(1));
     var trafficDirection=r.trafficDelta>0?"+":"";setText("trafficDetail",trafficDirection+fmt(r.trafficDelta,1)+"% vs reference price/ad at this review score.");
     setText("peakDetail",fmt(c.peakShare,0)+"% in "+fmt(c.peakHours,1)+" hours.");
-    setText("loadDetail",c.staff>0?fmt(r.peak/c.staff,1)+" peak customers per staff / hour.":"No staff on shift.");
+    setText("loadDetail",c.staff>0?fmt(r.peak/c.staff,1)+" peak customers per staff / hour"+(r.moraleStress>0?" + "+fmt(r.moraleStress,1)+" low-wage morale points.":"."):"No staff on shift.");
     var loadNode=document.getElementById("nodeLoad");var highLoad=r.load>c.loadThreshold;loadNode.classList.toggle("pressure",highLoad);loadNode.classList.toggle("alert",r.load>=90);
     setText("loadStatus",r.load>=90?"Severe load · burnout risk":(highLoad?"Burnout risk above "+fmt(c.loadThreshold,0)+"%":"Within model threshold"));
     var waitNode=document.getElementById("nodeWait");waitNode.classList.toggle("pressure",r.wait>=10);waitNode.classList.toggle("alert",r.wait>=15);
